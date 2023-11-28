@@ -1,0 +1,676 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>ChatGPT超级提示专家</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="599e4385-9ee7-425f-9394-236096e5c0ea" class="page sans"><header><h1 class="page-title">ChatGPT超级提示专家</h1><p class="page-description"></p></header><div class="page-body"><p id="404c8ef2-a426-4e7e-b5b7-6d73bad6538c" class="">非常强悍的一套通用提示词，可以应用到各类场景，我在原提示词的基础上追加了在线检索，当有需要的情况下可以通过在线检索搜索最新内容来协助生成内容。</p><figure id="c9118d7e-a7f8-4916-89be-e7eb816d3567" class="image" style="text-align:left"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/00.png"><img style="width:590px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/00.png"/></a></figure><figure id="372d17c4-a1de-4dcd-86f5-b5132505fba2" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled.png"><img style="width:1134px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled.png"/></a></figure><figure id="50e366c7-8504-45a1-898c-1084b161352f" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%201.png"><img style="width:1143px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%201.png"/></a></figure><figure id="8fe340e4-29d1-481c-bc6d-9c03295b8186" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%202.png"><img style="width:1119px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%202.png"/></a></figure><figure id="7368420c-57f4-4722-a6b4-15dc0ad244b7" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%203.png"><img style="width:1118px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%203.png"/></a></figure><figure id="7ea079d5-365d-4f7e-8b38-7be1a3d1f5d7" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%204.png"><img style="width:1108px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%204.png"/></a></figure><figure id="f6d751f1-6535-4cd0-bca0-b4416e1011da" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%205.png"><img style="width:1123px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%205.png"/></a></figure><figure id="5fa36d14-00c4-4994-8e10-ef165b1abde6" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%206.png"><img style="width:1111px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%206.png"/></a></figure><figure id="ec8457a0-b5fd-4169-8693-dfa76a8a6c1b" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%207.png"><img style="width:1118px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%207.png"/></a></figure><figure id="0069dc04-f37a-4094-833d-b07c70d365d7" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%208.png"><img style="width:1083px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%208.png"/></a></figure><figure id="c978758e-c953-4004-991e-fdc5e5b7f580" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%209.png"><img style="width:1110px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%209.png"/></a></figure><figure id="910ec941-1943-4662-9318-2751aeb24c65" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2010.png"><img style="width:1087px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2010.png"/></a></figure><figure id="1287e5ab-397a-4cd0-8cb9-672096704506" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2011.png"><img style="width:1064px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2011.png"/></a></figure><figure id="0de5064f-5bf0-4990-85f4-c8b23495c1c8" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2012.png"><img style="width:1104px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2012.png"/></a></figure><figure id="a16203bb-29d9-4f53-95ba-856fd153f34e" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2013.png"><img style="width:1113px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2013.png"/></a></figure><figure id="7ccb5329-919b-4fb9-89dd-5f89a927af11" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2014.png"><img style="width:1108px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2014.png"/></a></figure><figure id="31e6f4fd-ca1b-4a39-ba1a-d01f551daa6d" class="image"><a href="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2015.png"><img style="width:1111px" src="ChatGPT%E8%B6%85%E7%BA%A7%E6%8F%90%E7%A4%BA%E4%B8%93%E5%AE%B6%20599e43859ee7425f9394236096e5c0ea/Untitled%2015.png"/></a></figure><h2 id="0891dfae-c955-4aa9-98aa-21386bfbd68a" class="">导言</h2><p id="d8327840-ae23-4281-bf00-1686fad4a4f8" class="">        在当今快节奏的商业环境中，企业需要不断适应和创新，以保持竞争力。在这个过程中，DevOps作为一种先进的软件开发和运维方法论，已经成为许多企业的关注焦点。DevOps不仅仅是一种技术，更是一种文化和工作方式的转变，它对企业带来了巨大的变化和价值。</p><p id="19ceff03-40ca-4c00-8b22-8031a4134c84" class="">        DevOps的核心理念是将软件开发和IT运维紧密结合，通过持续交付、自动化和跨职能团队合作等实践，实现更快速、高质量的软件交付和运维流程。这种方法打破了传统的研发和运维之间的壁垒，促进了团队之间的协作和沟通，提高了交付速度、系统稳定性和可靠性。</p><p id="4a7ef5bb-7210-4d6d-93a5-006c70c184ca" class="">        本文将深入探讨DevOps对企业的影响以及所产生的价值。我们将从提高交付速度和质量、加强团队协作和沟通、提高系统稳定性和可靠性、降低成本和风险以及实现一致性和标准化等方面进行分析。同时，我们将引用真实的案例和数据，以支持我们的观点和结论。</p><p id="38ba5ffe-6846-40f2-bff8-173ef976429c" class="">        通过阅读本文，企业领导和员工，以及关注DevOps的所有人，将更好地了解DevOps对企业的影响，并为自己的组织带来更大的价值。</p><h2 id="5d0b2096-7037-4ffd-9425-2600e3ae7f54" class="">第一部分：DevOps的定义和原则</h2><p id="d227b6ef-a38e-4ae5-a26f-7f6be12f6a15" class="">        DevOps是一种结合了软件开发和IT运维的方法，旨在通过持续交付、自动化和跨职能团队合作等实践，实现更快速、高质量的软件交付和运维流程。相比传统的软件开发流程，DevOps能够更有效、更快速、更安全地开发和交付软件。</p><p id="3c5627b3-307d-4e48-9ec0-368ed409f8f4" class="">DevOps的核心原则包括：</p><ol type="1" id="b86e5178-aed3-46e6-9cb3-6beae4560f22" class="numbered-list" start="1"><li>持续交付：DevOps强调持续交付的理念，即通过自动化的流程和工具，实现软件的频繁交付和部署。持续交付能够缩短软件交付的周期，使企业能够更快地响应市场需求和变化。</li></ol><ol type="1" id="69ea4397-e8b2-48af-b547-814bd5c419d3" class="numbered-list" start="2"><li>自动化：自动化是DevOps的重要组成部分。通过自动化的部署、测试和监控等环节，可以减少人为错误，提高交付的质量和稳定性。自动化还能够提高团队的效率，减少重复性的工作，使团队能够更专注于创新和价值创造。</li></ol><ol type="1" id="73e03404-5556-48fd-864c-23e8cce4c0c0" class="numbered-list" start="3"><li>跨职能团队合作：DevOps强调不同职能团队之间的紧密合作和沟通。开发人员、运维人员以及其他相关团队需要共同努力，共同承担责任，共同追求软件交付的目标。跨职能团队合作能够减少摩擦和误解，提高团队的协作效率和整体绩效。</li></ol><ol type="1" id="7943cd89-b7dc-4be6-817b-e0e7010479ba" class="numbered-list" start="4"><li>反馈和持续改进：DevOps鼓励团队进行持续的反馈和改进。通过及时的反馈机制，团队可以快速发现和解决问题，不断改进和优化软件交付和运维的流程。持续改进是DevOps的核心价值之一，能够帮助企业不断提高效率和质量。</li></ol><p id="34c9ffc3-1936-42df-ac2f-8e179f4cda7e" class="">       通过遵循这些原则，企业可以实现更快速、高质量的软件交付和运维，提高团队的协作效率和整体绩效。DevOps的方法和原则已经被越来越多的企业采用，并取得了显著的成果。</p><h2 id="ff3fd884-d42b-4a3d-8035-512952bb4c71" class="">第二部分：DevOps对企业的影响</h2><p id="6a0cf2bc-0205-4c83-88a3-05ef3c27263f" class="">        DevOps对企业的影响是深远而广泛的。它不仅改变了软件开发和运维的方式，还对企业的效率、创新能力和竞争力产生了积极的影响。以下是DevOps对企业的几个主要影响方面：</p><ol type="1" id="b3e8c2d9-cda5-4974-96f6-3d55c38850d0" class="numbered-list" start="1"><li>提高交付速度和质量：DevOps通过自动化和持续集成/持续交付（CI/CD）实践，使企业能够更快地交付软件，并保证交付的质量。传统的研发和运维之间的壁垒被打破，开发人员和运维人员之间的协作更加紧密，软件的交付周期大大缩短，同时保证了软件的质量和稳定性。</li></ol><ol type="1" id="8920e8e6-88cd-41f6-a88d-a371b81c8f31" class="numbered-list" start="2"><li>加强团队协作和沟通：DevOps强调跨职能团队的合作，促进开发人员、运维人员和其他相关团队之间的沟通和协作。通过共享责任和共同努力，团队成员能够更好地理解彼此的需求和挑战，减少摩擦和误解，提高工作效率和团队凝聚力。</li></ol><ol type="1" id="0f1949db-dbb5-478a-84bd-14fbb4b44666" class="numbered-list" start="3"><li>提高系统稳定性和可靠性：通过自动化的部署和监控，DevOps可以减少人为错误，提高系统的稳定性和可靠性。自动化的测试和监控工具可以及时发现和解决问题，减少系统故障和停机时间，提升客户的满意度和信任度。</li></ol><ol type="1" id="ce032c3f-d333-419c-8f46-4ec236682abf" class="numbered-list" start="4"><li>降低成本和风险：DevOps的实践可以减少重复工作和手动操作，降低人力成本，并减少由于人为错误而导致的风险。自动化的流程和工具可以提高工作效率，减少资源浪费，同时提供更好的可追溯性和可靠性。</li></ol><ol type="1" id="e7b2efc8-2e16-440e-a21a-bed693daa914" class="numbered-list" start="5"><li>促进创新和持续改进：DevOps鼓励团队不断进行实验和创新，通过持续的反馈和迭代改进来提高产品和服务的质量。快速的交付周期和灵活的开发流程使得企业能够更快地响应市场需求和变化，推出新功能和改进，保持竞争优势。</li></ol><p id="405a7715-5d9a-444f-85e5-9d88fd2d8a56" class="">        综上所述，DevOps对企业的影响是多方面的，包括提高交付速度和质量、加强团队协作和沟通、提高系统稳定性和可靠性、降低成本和风险，以及促进创新和持续改进。采用DevOps实践的企业能够更好地适应快速变化的市场环境，提高效率和竞争力，实现持续增长和成功。</p><h2 id="139a6984-c7b9-4efc-8092-38c6282c559f" class="">第三部分：真实案例和数据支持</h2><ol type="1" id="db63dd6d-9fb0-4e93-a9ed-727abdb2b288" class="numbered-list" start="1"><li>真实案例：Netflix的DevOps实践<p id="89693e30-5821-4aa5-851d-a14263ad2ca7" class="">Netflix是一个以流媒体服务为主的全球性公司，他们在DevOps实践方面取得了显著的成功。通过采用DevOps的自动化和持续交付实践，Netflix能够快速部署新功能和修复bug，实现持续创新和快速响应客户需求。他们的DevOps团队通过自动化测试、持续集成和持续部署，实现了高效的软件交付流程，并保持了系统的稳定性和可靠性。</p></li></ol><ol type="1" id="ef1baf2a-5c15-4e44-b7bf-25b2c2d68873" class="numbered-list" start="2"><li>真实案例：Amazon的DevOps实践<p id="418addc6-1cfe-4281-9560-40c5773df42b" class="">作为全球最大的电子商务公司之一，Amazon在DevOps实践方面也取得了巨大的成功。他们通过DevOps的持续交付和自动化实践，实现了快速的软件交付和高质量的服务。Amazon的DevOps团队通过自动化的部署和监控，能够快速检测和修复潜在的问题，确保系统的稳定性和可靠性。这种高效的DevOps实践使得Amazon能够快速适应市场需求，并持续提供卓越的用户体验。</p></li></ol><ol type="1" id="d1cfe1db-d428-4f86-b0f6-5ddfca632991" class="numbered-list" start="3"><li>统计数据：根据2023年的DevOps报告<p id="255a0c58-7408-48e5-a9c8-4318bc7a422d" class="">根据最新的DevOps报告，采用DevOps实践的企业相比传统企业取得了显著的优势。其中一些关键的统计数据包括：</p><ul id="8853d6d6-6b95-4ea9-947e-ed18fb18b2f5" class="bulleted-list"><li style="list-style-type:disc">74%的企业表示，DevOps实践有助于提高交付速度。</li></ul><ul id="b9eec876-5451-40ac-8478-75ae521196f4" class="bulleted-list"><li style="list-style-type:disc">68%的企业表示，DevOps实践有助于提高系统稳定性和可靠性。</li></ul><ul id="0bd2f0c9-492d-4a53-a25b-49f2c1d8ca29" class="bulleted-list"><li style="list-style-type:disc">62%的企业表示，DevOps实践有助于降低成本和风险。</li></ul><ul id="7c2efa41-8d1e-4fd8-909e-9f8b8ee4c38e" class="bulleted-list"><li style="list-style-type:disc">81%的企业表示，DevOps实践有助于加强团队协作和沟通。</li></ul></li></ol><p id="a1c8d98d-899c-452d-b4f4-2cf8d379eb65" class="">        这些真实案例和统计数据充分展示了DevOps对企业的影响和价值。它们证明了DevOps实践能够提高交付速度、加强团队协作、提高系统稳定性，并降低成本和风险。</p><h2 id="a5df2095-c3ce-434a-b941-1b270261a5c5" class="">结论</h2><p id="b2284d61-a00e-414c-9d5f-83f94a22b90b" class="">        DevOps作为一种先进的软件开发和运维方法论，对企业带来了巨大的变化和价值。通过将软件开发和IT运维紧密结合，DevOps实践实现了持续交付、自动化和跨职能团队合作等核心原则，从而提高了交付速度、加强了团队协作、提高了系统稳定性，并降低了成本和风险。</p><p id="90d04983-7dc5-49d2-9716-7b260b43f283" class="">        通过实际的案例和统计数据，我们可以看到DevOps在许多企业中取得了显著的成功。例如，Netflix和Amazon等公司通过DevOps实践实现了快速的软件交付和高质量的服务，使得他们能够快速适应市场需求，并持续提供卓越的用户体验。</p><p id="651fa177-e2d4-4ee4-aac2-f283bab7afe8" class="">        根据最新的DevOps报告，采用DevOps实践的企业取得了显著的优势。他们能够更快地交付软件，提高系统的稳定性和可靠性，降低成本和风险，并加强团队之间的协作和沟通。</p><p id="7c7e98e1-ed8e-4fc7-bcff-fcfbdbdcd9b0" class="">        因此，我们鼓励企业领导和员工关注和采用DevOps实践，以提升企业的竞争力和创新能力。通过实施DevOps，企业能够更快速地交付软件，提高系统的稳定性和可靠性，降低成本和风险，并加强团队之间的协作和沟通。这将为企业带来更高的效率、更好的用户体验，并使其能够更好地适应不断变化的市场需求。</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

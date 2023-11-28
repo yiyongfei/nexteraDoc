@@ -1,0 +1,736 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>提示词结构化方法论和实践</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="68900aae-8042-4308-8e16-cb073b9ed776" class="page sans"><header><h1 class="page-title">提示词结构化方法论和实践</h1><p class="page-description"></p></header><div class="page-body"><p id="4f3ecbe7-9b4a-4323-9c25-ed9c1eb33e5f" class=""><strong>引用于LangGPT项目里的资料，感谢作者的分享。</strong></p><p id="e868dcb1-6c22-4b42-bbb5-2b18077698a6" class="">LangGPT项目地址：<em>https://github.com/yzfly/LangGPT</em></p><figure id="3a03e144-3217-4ff4-8530-284998f2f050" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25871.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25871.png"/></a></figure><p id="58e973e9-e3b2-4071-8b41-5ba093ed7866" class="">Hello, 大家好，我是云中江树，谢谢占总 (占冰强，微信bing3qiang) 为大家提供这么好的一个交流机会，很高兴今天能为带来提示词方面的分享。</p><figure id="2ad20ed1-0675-4798-9f6a-501cbab76598" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25872.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25872.png"/></a></figure><p id="996c9c16-e2d4-4bbe-9609-ba0b23e42997" class="">今天的分享分为四个方面内容，自我介绍，提示词基础， LangGPT 结构化提示词，最后是一些实践和思考。</p><figure id="f4e31b63-0352-4425-9ff1-9c44684b4385" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25873.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25873.png"/></a></figure><p id="1cbbe114-3bee-4b1a-86a4-b86fb1ac6361" class="">首先向大家自我介绍一下，我本名是刘远忠，云中江树是我的笔名。大家可以称呼我为江树，简单记忆——可以理解为江边的树。我本科毕业于电子科大，研究生毕业于武大， AI 相关专业硕士。今年毕业后，成为了一名自动驾驶算法工程师。我是一名科幻迷，曾经获得 2021年全国科普科幻之星荣誉。同时，我也是一个玩 AI 的爱好者。</p><p id="93d7a55b-21e3-4111-8549-b900bdec3f22" class="">我曾经探索过好几百个 AI 项目，整理成 ChatGPT 中文指南开源后，连续好几天登上了 GitHub 全球热榜。我发现这些项目的 <strong>核心在于如何更好的调用大模型能力，即提示工程</strong>，在观察学习了诸多提示词，尤其是 AutoGPT, 麋鹿先生这两个项目的提示词后，我形成了结构化提示词写作方法，在 5 月份将其开源为 LangGPT 项目，吸引了许多朋友的关注。</p><p id="948a6064-a327-47b6-bb98-3a6ba2955a3a" class="">	以此为契机，我认识了许多对 AI 抱有巨大热情的朋友，其中就包括 Broke 框架作者陈财猫。</p><p id="f7edb1e3-a511-43e7-9186-0aab583d3623" class="">
+</p><figure id="a1b48cfe-b0c9-4dc5-a24b-c8eee3a440b9" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25874.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25874.png"/></a></figure><p id="8e5dca28-c49d-4a2c-8804-4af89673783d" class="">	我21年就开始提示词工程的学习，为什么会研究提示工程呢？</p><p id="7fb873da-0865-4484-8a08-d786101703aa" class="">	作为一名 AI 算法工程师，22 年之前的许多 AI 应用都是使用的微调完成。<strong>先预训练，然后用数据集微调模型的输出层，这是一种通用做法。实际微调多少层，多少参数等等都是可以变化的，甚至可以全参微调。微调有很多好处，缺点也很明显，依赖高质量标注数据，需要调试训练超参数，常常训练失败，甚至性能不如预训练模型。</strong></p><p id="dc1096dd-dafd-4478-9e55-9fbaaabcc384" class="">
+</p><figure id="3870f46a-3bba-462e-a0b5-c0790bd6f00b" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25875.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25875.png"/></a></figure><p id="cc47c3be-6a07-44cf-864b-04b87677b5d6" class="">	这时候 prompt tuning 出现了，<strong>不用训练模型，只需要调整提示词即可，由于模型参数不会更新，所以能充分利用预训练模型的泛化性</strong>，因此投入了学习。在阅读 prompt tuning 论文时候，同时也了解 prompt 的许多概念，如变量，模板，结构化等，为 LangGPT 提出打下了基础。</p><p id="8b8e4d24-ef95-4b4b-9d8a-95456294070a" class="">
+</p><figure id="a5cec232-e08f-4eef-86dd-4e5b2afb9c1b" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25876.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25876.png"/></a></figure><p id="db6ef3a6-92a4-44f0-a242-74bba8fa7c4f" class="">	随后 ChatGPT 横空出世，各种提示词技巧、框架开始大爆发。</p><p id="e33fe1b3-a06d-4cc7-8a06-b0e31b0bfb71" class="">
+</p><figure id="649c7716-d01a-45d0-9c9d-72a1efde350a" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25877.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25877.png"/></a></figure><p id="ff8269d0-3dab-4395-8dd0-839ccd6c975f" class="">	首先是各种提示词技巧，这里是我总结的一些现有的方法。一共 7 个，仅供参考，有不正确的地方欢迎批评指正。关于各种提示词方法，网上的资料也很齐全，在此不再赘述。</p><p id="3d05d30d-87e8-4df6-9e0d-f4cdf78e7f15" class="">	有一点值得说明的是，不应该盲目追求提示词技巧，要有自己的思考。尤其是各种学术论文里的提示词技巧，在应用层中实际使用时需要考虑是否合适。比如说前一阵子比较火的 “深呼吸方法” “take a deep breath”, 被炒作的比较厉害，实际上去阅读论文你可以发现，这个方法存在模型偏好，只针对谷歌的 PaLM 模型比较有效，在 GPT 上面表现一般。</p><p id="6b0120eb-a264-458b-b5f7-0b4abef83921" class=""><strong>进行提示词写作时，以满足自己需求为第一要义，灵活选用技巧即可。</strong></p><p id="9e6be93f-82bd-4d3b-b2f6-98ef1df9aeab" class="">
+</p><figure id="a48f7fd4-8585-4461-a8ca-c538e16a6a4f" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25878.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25878.png"/></a></figure><p id="5a34990d-f0d3-4b89-a6e3-e2d55735b55c" class="">随后出现了各种提示词框架，比如猫总的 BROKE 框架，对编写提示词有了更强的指导作用。猫总还写了提示词进阶这本书，受到了许多媒体的关注和报道，大家感兴趣可以买来看看，下面是猫总的微信，感兴趣可以添加好友交流。</p><p id="b85cef51-c38f-449c-9847-fddebdfbe01b" class="">
+</p><figure id="b5a3b160-9e0e-4141-a078-3ccab9dbfbdf" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25879.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%25879.png"/></a></figure><p id="4b8c706d-5287-4fea-bc41-12832dbf2384" class="">再比如 CRISPE 框架，写出来的提示词大概是类似这样的一小段文本。</p><p id="774b57b9-d355-45b8-ab96-6f772d7a172f" class="">
+</p><figure id="3d8d1211-341b-40fc-9da1-cb677452482b" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258710.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258710.png"/></a></figure><p id="1aeeb94d-c1c0-4f7f-a8ce-ef9aeae535e2" class="">然而，<strong>提示词的编写还是处于手工业阶段，依赖人去完成。想象一下未来 AGI 实现，agents 遍地的时候。我们必然要以工业的方式量产 agents，这也就意味着写 prompts 这件事情需要由手工业，变成现代的标准化、自动化流水线生产的事情。</strong></p><p id="ba37e042-86da-4854-bc05-27bdca55e30a" class="">
+</p><figure id="72421fa3-9a63-4840-aa7c-e3ce04878e38" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258711.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258711.png"/></a></figure><p id="53c3fc01-b263-41ad-aeb0-8c061eb6fcd0" class=""><strong>那么怎么样以 AI native 的方式来做这件事情？</strong></p><p id="03397722-f2d9-4477-8ed2-1bc55d4f2f55" class="">
+</p><figure id="4421be05-a958-4202-96af-f33eefe725d9" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258712.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258712.png"/></a></figure><p id="bc792e88-60c3-4f45-9638-53266ca3d702" class="">考虑到当下的大模型几乎都是 Role-based 的模型。我想，既然人有自己的简历，我们也可以为 agents 定制一份简历。<strong>Prompt 作为人操作机器的更高发展阶段的工具，可以借鉴结构化程序设计的方法，来设计结构化提示词，以实现提示词生产的标准化和专业化。</strong></p><p id="7e546d8d-73f2-47fb-96fa-b1d2343b6656" class=""><strong>今年 4 月份成形，5 月初开源，LangGPT 的实践在世界范围来看都算是先行者。</strong></p><p id="2a0827b8-3e23-4b9a-9408-11f2780d24ed" class="">大家可以看到 LangGPT 写出来的 prompts 层次清晰，工整有序，和人的简历很像。如果你曾经见过类似这样的提示词，尤其是中文提示词，那么很大概率这个作者受到过结构化提示词思想的启发和影响。</p><p id="85b7b5ce-54c9-498d-ad0c-c2f3f8bf9b72" class="">
+</p><figure id="20099c4b-e875-4974-948d-f850502bc066" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258713.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258713.png"/></a></figure><p id="e3f9d8b1-bc5b-441b-97a9-36197e564833" class="">怎么保证自动化生产的提示词的质量呢？答案是标准化。</p><p id="73a258ee-a019-4fe4-a2a1-82ee438bc002" class="">首先是内容结构的标准化。整体采用基于角色的框架。为 agent 角色编写简历，它的名字，背景，介绍，技能，需要遵守的规则，工作流程，初始化行为等几个部分。</p><p id="885a10bf-c330-4557-9e03-489c1aada100" class="">为规范各个部分的编写同时借鉴编程思想，设计了轻量的语法，包含变量，作用域，逻辑流控制等。通过复用 Markdown， json，yaml 等成熟格式直接实现。</p><p id="61782186-5546-41c0-9d0f-69112cc20c7d" class="">为了进一步确保提示词质量，还设计了模板。模板层级结构清晰，可采用不同的格式。</p><p id="96915c91-b29c-4f8c-b3a3-4c5de793cd3c" class=""><strong>更重要的，封装了实践中最有效的提示词方法论确保质量。</strong></p><p id="4789aa8f-d7fc-4dc6-b615-42bb8edadd3c" class="">
+</p><figure id="17ba0df0-c075-42ec-822b-159c54148dd9" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258714.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258714.png"/></a></figure><p id="829222de-bde9-446d-833a-8931e6e3af4a" class="">结构化方式促进了 markdown 格式提示词的流行，很多朋友<strong>将结构化等同为 markdown 格式写作，这实际上是对我们的误解。</strong></p><p id="a00ef505-c6ba-4c40-ba06-d188ba868812" class="">Markdown 确实很好用，我们可以看到 OpenAI 的系统预置词也采用同样方式编写，也是 LangGPT 提示词采用的主要格式。但实际上<strong>结构化 != 格式化，可采用任何格式，实践中类似 json，xml 这类具有闭合结构的语法甚至性能更加稳定。</strong></p><pre id="1a56a244-46e0-4e18-a869-40f685e1ea62" class="code"><code>Role (角色) -&gt; Profile（角色简介）—&gt; Profile 下的 skill (角色技能) -&gt; Rules (角色要遵守的规则) -&gt; Workflow (满足上述条件的角色的工作流程) -&gt; Initialization (进行正式开始工作的初始化准备) -&gt; 开始实际使用
+
+# Role: 设置角色名称，一级标题，作用范围为全局
+
+## Profile: 设置角色简介，二级标题，作用范围为段落
+- Version: 1.0     设置 Prompt 版本号，记录迭代版本
+- Language: 中文   设置语言，中文还是 English
+- Description:     一两句话简要描述角色设定，背景，技能等
+
+### Skill:  设置技能，下面分点仔细描述
+1. xxx
+2. xxx
+
+
+## Rules        设置规则，下面分点描述细节
+1. xxx
+2. xxx
+
+## Workflow     设置工作流程，如何和用户交流，交互
+1. 让用户以 &quot;形式：[], 主题：[]&quot; 的方式指定诗歌形式，主题。
+2. 针对用户给定的主题，创作诗歌，包括题目和诗句。
+
+## Initialization  设置初始化步骤，强调 prompt 各内容之间的作用和联系，定义初始化行为。
+作为角色 &lt;Role&gt;, 严格遵守 &lt;Rules&gt;, 使用默认 &lt;Language&gt; 与用户对话，友好的欢迎用户。然后介绍自己，并告诉用户 &lt;Workflow&gt;。
+
+
+或者
+# Role: &lt;name&gt; : 指定角色会让 GPT 聚焦在对应领域进行信息输出
+
+## Profile author/version/description : Credit 和 迭代版本记录
+
+## Goals: 一句话描述 Prompt 目标, 让 GPT Attention 聚焦起来
+
+## Constrains: 描述限制条件, 其实是在帮 GPT 进行剪枝, 减少不必要分支的计算
+
+## Skills: 描述技能项, 强化对应领域的信息权重
+
+## Workflow: 重点中的重点, 你希望 Prompt 按什么方式来对话和输出
+
+# Initialization: 冷启动时的对白, 也是一个强调需注意重点的机会</code></pre><p id="b22afd11-4538-4fc3-9b9a-5ad62379a748" class="">
+</p><figure id="494771cd-f338-4721-ae5c-2c1351ae6236" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258715.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258715.png"/></a></figure><p id="051140ec-b45b-484e-ab27-6c40870345e9" class="">更重要的方面是方法论封装融合，LangGPT 进一步将技巧和框架融合，形成高质量的模板。</p><p id="b2e5a2fc-a46b-488d-98bc-b806fd35c579" class=""><strong>封装的技巧包括角色扮演，CoT 思维链，格式法，属性词法，同时内置了提示词经典句，正是这些基础性的方法的封装，确保了生产的初版提示词的质量。</strong></p><p id="286b371e-c091-450c-9279-57a4107fdac3" class="">LangGPT 的这种模板的思想，方法论封装的思想影响了一大批提示词编写者，国内许多公司都直接或间接的应用着 LangGPT 的这种结构化范式。</p><p id="6c620fb6-12ce-479e-b459-38b334a840eb" class="">
+</p><figure id="7cd264ef-8d15-479e-be59-5b0854284237" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258716.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258716.png"/></a></figure><p id="36a7c4af-696c-492b-8ccb-c13f67fdb728" class="">许多朋友应用了结构化提示词之后，提示词质量得到了很大提升，但不知道结构化提示词的本质是什么？</p><p id="2ba89057-7ab3-43e4-a4c0-e11dea22027e" class="">我这里借用一下刚哥的观点，<strong>本质是方法论的封装。</strong> 刚哥在结构化提示词方面也进行了很多创新创造，影响力很大，大家感兴趣可以关注，即刻 ID 为 李继刚。</p><p id="b25b9e51-0ae6-4ee1-86ef-b59dd4012f04" class="">
+</p><figure id="00d752bd-1486-4428-816d-286073678307" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258717.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258717.png"/></a></figure><p id="09cdb165-1c11-472d-9658-1091fbc2511c" class="">解决了提示词标准化的问题，还有提示词生产自动化的问题。如何将纯手工的工作流转变为自动化的工作流？如何 AI Native 的完成这件事情？</p><p id="be260d3a-2e5b-405d-b21f-78b8db90f0f1" class="">我们的答案是提示词就可以做到。<strong>提示词可以被视为 AI 时代的编程语言，因此我们设计了一套元提示词来进行结构化提示词的自动生成，这个事情在国内外我们也算是最早做的一批。</strong></p><p id="77bb5789-2ea2-47f6-9b8e-5f7224e7add7" class="">依据我们的实践，自动生成的提示词可以节省 60% 的提示词编写时间，生成后的提示词性能不足时可通过人工调试迭代完善。</p><p id="768cd517-3df0-4c5b-827e-f04a482b87dc" class="">
+</p><figure id="a24aa834-3a87-4823-85b6-213c52eec4c6" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258718.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258718.png"/></a></figure><p id="20c09324-b3e8-4d03-940d-bfb8cbb2b2ea" class="">
+</p><figure id="2007bf01-8d2f-46b8-9450-3ad5d840a1a8" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258719.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258719.png"/></a></figure><p id="19b1f759-cce1-4a36-a1c6-31bbc9ccecc5" class="">之后，得益于结构化提示词思想的广泛传播，方法论和结构更加完备。尤其是李继刚，刚哥，输出了超级多，超级棒的提示词，大家如果用过 arthur 写的提示词，那就是刚哥写的了。</p><p id="d1bd5184-ab0a-4748-8737-55f6e3423503" class="">同时，我们以开源共建共享的方式组建了提示词交流社群，为国内数千名提示词爱好者提供了一个开源开放的高质量交流平台，并构建了开放共享的提示词知识库，欢迎大家加入。</p><p id="ee902734-8565-415a-8427-ca705369815d" class="">
+</p><figure id="8589d5ae-09d0-44dd-b32e-3e71ae5fc481" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258720.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258720.png"/></a></figure><p id="bf635011-699b-4ac0-85aa-e58959a0a6b0" class="">最后，和大家分享一些提示词相关的思考。</p><p id="f3e20e9e-2b94-4f59-99c5-b6b88f801ccd" class="">
+</p><figure id="4e2a203f-cbe9-4bed-9acb-43d4d5d3dd48" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258721.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258721.png"/></a></figure><p id="c370cb92-cebd-472f-86ef-9cc9ab9348b8" class="">时间有限，我们简单谈谈结构化提示词的局限性，有许多朋友对结构化提示词提出了很多有益的反思，这是很好的。结构化模板通过方法论封装能够保证提示词的质量，但有时候也会成为枷锁。提升自己提示工程能力这件事，就像读书一样，先把书读厚，再读薄，提示词也是如此，先写长，再写短。</p><p id="f32e519d-e59e-4ee3-9582-3ac3dab42b9c" class="">人通过人的语言来操作AI ，操作机器，我认为是类似人类登上月球迈出的一步， 随着 AI 的进化，目前它还不完美，相信随着 AI 的进化，我们可以由人到神，对物质世界的控制做到言出法随，心随意动，我期待有生之年看到这一天的实现。</p><p id="697ba8ed-e9f0-42c7-9e70-2a81e608ca3c" class="">
+</p><figure id="3b3a01eb-4701-4c7f-ab4d-05451359503c" class="image"><a href="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258722.png"><img style="width:1280px" src="%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E5%AE%9E%E8%B7%B5%2068900aae804243088e16cb073b9ed776/%25E5%25B9%25BB%25E7%2581%25AF%25E7%2589%258722.png"/></a></figure><p id="658b4d5f-a6d7-4321-9dee-2e6c2673a467" class="">我认为通用人工智能是实现这一愿景的现实基础。这是一个激动人心的时代，2016年AlphaGo 击败李世石，在专用领域上已经无人能敌，2022 年ChatGPT 横空出世，在通用领域上取得了巨大的成功。只短短六年，AI 的发展令我们震撼，再过6 年，10 年，是否会换了人间？</p><p id="24083403-69e2-4c8b-9a11-9f54c10be276" class="">
+</p><p id="cb01d637-07ed-4a4c-9a48-3247c20ca0c1" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
