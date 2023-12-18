@@ -1,0 +1,697 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>自动化部署</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a297cc7f-5d6c-4256-bd99-e4a1ba8248a2" class="page sans"><header><h1 class="page-title">自动化部署</h1><p class="page-description"></p></header><div class="page-body"><p id="33db7211-2cb0-49c0-9dcb-5160bf0a7cf1" class="">只支持Centos下的自动化部署。目前只迁移了JDK、Nginx、Redis、Nacos这四个应用。</p><h2 id="396d6eb8-1f8a-4833-9ce1-1027a945d7cf" class="">准备工作</h2><p id="013f1140-e9d7-42cc-a87c-c4b962066eed" class="">自动化部署通过Agent执行部署脚本，建议自行安装Agent，一方面Agent部署在私有云上，可以在私有云执行自动化部署，另一方面可以在本地Agent设置敏感信息(比如密码之类的)，无需在执行时提供用户名和密码避免泄露。</p><p id="58673c20-db28-42fa-a61b-97bc160210cb" class="">默认Agent：<strong>/devops/agent/sByKvIjTGZbR</strong></p><p id="77588230-5ca5-465a-889c-cf3422a0102d" class="">Agent安装过程：</p><p id="907368c4-c957-4376-bfe6-2427e55b381f" class="">1、安装Docker。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2574dc46-3c6c-4ae7-92d0-a6b74ef8fa06" class="code"><code class="language-Plain Text">安装：curl https://releases.rancher.com/install-docker/20.10.sh | sh
+启动：service docker start</code></pre><p id="6d72be12-1b94-4c28-bf63-3978ec55b0ef" class="">2、Pull镜像。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d38b5528-451f-466a-be1d-3b031c698d7f" class="code"><code class="language-Plain Text">docker pull nexterachat/shenbing-agent:latest</code></pre><p id="9ad2d49c-ab56-4cf2-8fc7-482b75d538eb" class="">3、运行Docker 镜像</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20b74572-3124-463e-bbaf-de128d7112ed" class="code"><code class="language-Plain Text">
+1、创建一个目录用于和容器共享文件，用于存放主机清单
+例如: mkdir /root/dockerfolder
+2、运行镜像
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v /root/dockerfolder:/home/agent/share -e DEVOPS_AGENT_DEST=/devops/agent/1g5xn2t0xyz nexterachat/shenbing-agent:latest
+注意：
+-v /root/dockerfolder:/home/agent/share，这里的/root/dockerfolder是第1步创建的容器共享目录；
+-e DEVOPS_AGENT_DEST=/devops/agent/1g5xn2t0xyz，这里的/devops/agent/1g5xn2t0xyz，1g5xn2t0xyz请随机生成，需确保全网唯一，远程执行时需根据该执行端点找到Agent。
+3、在/root/dockerfolder创建hosts文件，文件内容如下，用于存储待部署主机的用户名、密码。部署完成后可以更改主机密码。
+121.41.45.2 ansible_ssh_user=root ansible_ssh_pass=xxxxxx ansible_sudo_pass=xxxxxx
+121.41.45.3 ansible_ssh_user=root ansible_ssh_pass=xxxxxx ansible_sudo_pass=xxxxxx</code></pre><p id="31f6c2f8-076b-449f-a3aa-e8aa29137a11" class="">主机登录补充说明：</p><p id="f4887550-cbab-4f5b-8e6b-a0f2c5275814" class="">自动化部署是通过Ansible脚本在待部署主机执行脚本完成部署，目标主机无须安装客户端，Agent和目标主机之间的通讯是通过ssh进行的，如果执行时出现无法访问的情况，可以登录容器ssh进行网络上的验证。</p><p id="7c62c94d-7b5f-46b8-9567-942d9f2a2de2" class="">1、用户密码方式。通常，自己搭建的虚拟主机或者从云服务商购买的虚拟主机，都会提供用户名、主机密码，此时，可以通过用户名、密码的方式访问。例如：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bddd023e-5654-45a3-8d10-cf9e96cd88e5" class="code"><code class="language-Plain Text">121.41.45.2 ansible_ssh_user=root ansible_ssh_pass=xxxxxx
+121.41.45.3 ansible_ssh_user=root ansible_ssh_pass=xxxxxx</code></pre><p id="1ea204ab-f092-47a6-90b5-9dd382ad2fe6" class="">如果是拥有具备管理员权限的用户，并且该用户可以通过sudo提权，则：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2e1e5a87-eeb4-4244-b032-9a0f8d7004ec" class="code"><code class="language-Plain Text">121.41.45.2 ansible_ssh_user=sudouser ansible_ssh_pass=xxxxxx ansible_sudo_pass=xxxxxx
+121.41.45.3 ansible_ssh_user=sudouser ansible_ssh_pass=xxxxxx ansible_sudo_pass=xxxxxx</code></pre><p id="c14613cf-3f13-4c13-bb44-3bf6c832a7cf" class="">2、密钥方式。如果提供的主机只能通过密钥的方式访问，并且所提供的用户未提供密码（该用户也未设密码，如果用户有密码，还是需要通过用户密码的方式连接）。可以通过密钥来执行：</p><p id="fb103f69-d9c9-432e-9685-c36520d5070d" class="">执行前，先将各主机的私钥复制到容器里的共享目录里。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9c30253d-3587-4417-a156-378c2128ae50" class="code"><code class="language-Plain Text">121.41.45.2 ansible_ssh_user=sudouser ansible_ssh_private_key_file=/home/agent/share/121.41.45.2.pem
+121.41.45.3 ansible_ssh_user=sudouser ansible_ssh_private_key_file=/home/agent/share/121.41.45.3.pem</code></pre><p id="776b6542-b1a3-4f3a-abd8-5e72a01f4fdc" class="">如果以上方式有问题，对于单机部署，可以在容器里，将.pem私钥文件复制到容器里的root用户的.ssh目录下并重命名为id_rsa(cp /home/agent/share/121.41.45.2.pem /root/.ssh/id_rsa)，ssh 免密验证通过后再执行。</p><p id="410a1343-69f9-4c9a-9013-501f9bb441a7" class="">3、容器宿主机。如果提供的主机只能通过堡垒机访问，同网段的其他主机无法访问时，此时，可在该主机上安装Agent，然后在容器里通过容器网关的方式访问宿主机，通常宿主机的容器网关IP是172.17.0.1。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="51e28a52-e4ca-4525-ad4d-3f2ac5139309" class="code"><code class="language-Plain Text">172.17.0.1 ansible_ssh_user=sudouser ansible_ssh_private_key_file=/home/agent/share/121.41.45.2.pem
+或
+172.17.0.1 ansible_ssh_user=sudouser ansible_ssh_pass=xxxxxx ansible_sudo_pass=xxxxxx</code></pre><p id="70852ea6-5e8e-43e5-a76a-d7c185220c67" class="">4、sudo提权。执行脚本里会涉及较多的yum安装，会要求执行的用户具备管理员权限并能够sudo，如果脚本执行时出现权限不足的提示，且确定ansible_ssh_user的用户具备管理员权限，可以:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22e07a4a-89ce-4875-9e2a-9070ba68c82a" class="code"><code class="language-Plain Text">121.41.45.2 ansible_ssh_user=sudouser ansible_ssh_pass=xxxxxx ansible_sudo_pass=xxxxxx ansible_become=yes ansible_become_method=sudo ansible_become_user=root
+121.41.45.3 ansible_ssh_user=sudouser ansible_ssh_pass=xxxxxx ansible_sudo_pass=xxxxxx ansible_become=yes ansible_become_method=sudo ansible_become_user=root
+或
+121.41.45.2 ansible_ssh_user=sudouser ansible_ssh_private_key_file=/home/agent/share/121.41.45.2.pem ansible_become=yes ansible_become_method=sudo ansible_become_user=root
+121.41.45.3 ansible_ssh_user=sudouser ansible_ssh_private_key_file=/home/agent/share/121.41.45.3.pem ansible_become=yes ansible_become_method=sudo ansible_become_user=root</code></pre><h2 id="7a64a14b-ae49-432b-aaa2-65797dd26cae" class="">部署JDK</h2><p id="00692797-8aa2-40bb-af0c-4903d0124be3" class="">可在多台主机批量部署OracleJDK或OpenJDK，需注意OracleJDK的版本不可选择，固定1.8.0_191。OpenJDK选用adoptium发行版，可以选择需要的版本进行部署，不提供版本时，默认安装8u392-b08版本。</p><figure id="e48d0c06-f2ff-4d85-8c41-6b39f3e879a6" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01.png"><img style="width:1112px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01.png"/></a></figure><figure id="20e22c40-ec92-4b5e-8845-5b1db8ae227c" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/02.png"><img style="width:1103px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/02.png"/></a></figure><figure id="47ab1929-56fd-4687-83a2-257568da4e52" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/03.png"><img style="width:1111px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/03.png"/></a></figure><p id="649c9bc4-669e-445d-b35b-d2195747c331" class="">可以点击&lt;查看部署结果&gt;的URL右键打开部署监听页面，点击连接按钮，可以查看部署执行结果。</p><figure id="df892694-fa68-431f-8e72-62c09d9aea18" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/03-01.png"><img style="width:1007px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/03-01.png"/></a></figure><p id="29a9fdc9-6919-4e9e-a3fb-73fbddb9cae1" class="">当ansible_type是finish表示部署已结束，是否成功部署主要看failures是否为0，为0表示部署成功。status的状态有时候会不正确，有些忽视的错误(例如用户不存在校验)会导致最终的status为FAILED</p><figure id="4488b4b1-1cbf-495d-8a73-6cdc3b5c67f0" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/%25E9%2583%25A8%25E7%25BD%25B2%25E5%25AE%258C%25E6%2588%2590.png"><img style="width:890px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/%25E9%2583%25A8%25E7%25BD%25B2%25E5%25AE%258C%25E6%2588%2590.png"/></a></figure><figure id="e2f39532-4769-4f54-b941-23c518473e16" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/04.png"><img style="width:1114px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/04.png"/></a></figure><figure id="fa0d0dd0-a731-4eed-88e1-300b32712813" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/05.png"><img style="width:1116px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/05.png"/></a></figure><p id="d1eebb5b-d477-47cf-9b73-e8eade397ce3" class="">部署完成后的验证：</p><figure id="cf000ce7-d2c8-445f-b163-078baeb3768e" class="image" style="text-align:left"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-01.png"><img style="width:524px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-01.png"/></a></figure><p id="e714ab21-36b9-496d-be2f-7b42ea9747b7" class="">OpenJDK安装完成后，需要自行将对应版本java软链到/usr/bin或/bin目录下</p><figure id="04273fb1-e5f1-478f-adce-fd612908505c" class="image" style="text-align:left"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-02.png"><img style="width:668px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-02.png"/></a></figure><figure id="b446ed04-96d2-4917-8e17-fb3e7e93a44a" class="image" style="text-align:left"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-03.png"><img style="width:585px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-03.png"/></a></figure><h2 id="aba19fbf-4429-4d31-b526-1241055ad476" class="">部署NGINX</h2><p id="afa47748-16e7-4d4f-b08d-05676b42aeeb" class="">可在多台主机批量部署Nginx，以源码编译方式安装，安装时会安装VTS Module。不提供版本时，默认安装1.22.0版本。</p><figure id="70084454-7a01-4c3c-8183-f935801b7a15" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01%201.png"><img style="width:1109px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01%201.png"/></a></figure><figure id="158f8eef-61bf-4128-b88a-73726790c0c0" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01-1.png"><img style="width:1142px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01-1.png"/></a></figure><h2 id="95776e80-a7ce-4a9b-b9d0-c88af9875333" class="">部署NACOS</h2><p id="d478a22e-1595-4462-9006-46e379e45903" class="">可以部署Nacos单机版或者集群版，如果想部署集群版，建议部署3台主机。默认Nacos版本2.2.2。</p><figure id="43680e78-02ea-4918-9cea-a8b288dd7a2f" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01%202.png"><img style="width:1114px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01%202.png"/></a></figure><figure id="78855911-6331-41dd-ab5d-e4a602d8e571" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/02%201.png"><img style="width:1105px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/02%201.png"/></a></figure><h2 id="758b84b7-8612-4f6b-a6ea-bc62c383cdb0" class="">部署REDIS</h2><p id="d37af172-51f0-4d0b-a5d3-d2af7377424e" class="">可以部署Redis的主节点、从节点，还有哨兵，默认部署版本5.0.12，请注意，Redis的部署目前尚不支持6、7这二个版本。</p><figure id="b3eb9e23-2ca6-4ea5-a98a-cfdca2d20583" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01%203.png"><img style="width:1113px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/01%203.png"/></a></figure><figure id="34364c3e-8325-4460-9aa7-ab4c79fdb545" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/02%202.png"><img style="width:1114px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/02%202.png"/></a></figure><figure id="bd4e4273-2f74-4794-a734-200a130180a9" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/03%201.png"><img style="width:1111px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/03%201.png"/></a></figure><figure id="16e587f5-9d52-4ddb-9dc0-573f51f34ed2" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/04%201.png"><img style="width:1110px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/04%201.png"/></a></figure><figure id="cbbd7fe6-6a0a-4b4c-b548-052251891fb1" class="image" style="text-align:left"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/05%201.png"><img style="width:432px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/05%201.png"/></a></figure><figure id="cbe2cb90-1fa1-4279-b0e7-4a22f786f678" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-01%201.png"><img style="width:813px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-01%201.png"/></a></figure><figure id="17241416-d56b-483b-b3d0-9f48fd125ef2" class="image"><a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-02%201.png"><img style="width:808px" src="%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%20a297cc7f5d6c4256bd99e4a1ba8248a2/06-02%201.png"/></a></figure><p id="171f7d6a-4ff9-4a01-80d9-c65bca77b27a" class="">补充一下：</p><p id="0a589005-83bf-4359-964b-ec5c6cde13af" class="">部署时发现对话上下文的保持并不是完全符合预期，Redis主节点、从节点、哨兵相互之间存在一定的关联，各自部署时建议明确指明所使用的Agent、版本号，以避免不一致。</p><p id="80ccc732-1511-4928-8397-0ab47e56da77" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
