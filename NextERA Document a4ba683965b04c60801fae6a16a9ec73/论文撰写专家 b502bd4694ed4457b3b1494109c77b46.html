@@ -1,0 +1,680 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>论文撰写专家</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b502bd46-94ed-4457-b3b1-494109c77b46" class="page sans"><header><h1 class="page-title">论文撰写专家</h1><p class="page-description"></p></header><div class="page-body"><p id="06eb228d-8c5d-4c6a-a55d-ba61fb972ca4" class="">临近毕业的大学生必备应用。该应用预设了一些角色：论文辅导、论文撰写、领域专家、论文评审，每个角色都有其对应的流程和可使用的工具（比如领域专家可以做学术搜索、文章解析），这些角色会协助你完成论文，因为有学术搜索兜底，所以生成的论文比较可靠。</p><p id="60dc6939-4676-49ba-bf0c-012fc3fb5b94" class="">建议用于初稿生成，然后在生成的基础上做些增删，追加图表，通过论文修改应用细化章节。</p><p id="38269f54-90f8-48a6-a794-12a85b661325" class=""><mark class="highlight-brown"><strong>请注意，该应用默认使用的模型是GPT-3.5-16K，实际使用中有比较大的概率会遇到上下文的问题（特别涉及到学术搜索、谷歌搜索、文章解析的场景），建议使用GPT-4-1106，有比较大的上下文窗口。</strong></mark></p><p id="650ad8ae-718d-4818-bafc-1e9b8b1e58ae" class="">应用</p><figure id="d0a45bc0-db12-4812-ad1e-09c4847544bd" class="image" style="text-align:left"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/%25E5%2585%25A5%25E5%258F%25A32.png"><img style="width:356px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/%25E5%2585%25A5%25E5%258F%25A32.png"/></a></figure><p id="4978d766-7cc2-453b-bfd5-c0395454fa0b" class="">示例</p><p id="1624019d-1e5d-4400-ba71-0197974fdfbe" class="">该示例使用GPT-4-1106进行验证，里面会应用各种工具来辅助论文的生成。</p><figure id="b26d9373-0b04-4faf-9072-71f7966067dd" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/01.png"><img style="width:1112px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/01.png"/></a></figure><figure id="747c5829-51a3-486d-ba41-e3233e8157ed" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/02.png"><img style="width:1111px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/02.png"/></a></figure><figure id="387b6698-306d-42d4-900c-8871b06e376c" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/03.png"><img style="width:1113px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/03.png"/></a></figure><figure id="edf557ff-64d9-4e7e-8060-05bee0e133f3" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/04.png"><img style="width:1101px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/04.png"/></a></figure><figure id="4f104579-acdc-4a92-ba70-77b97f69cc5b" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/05.png"><img style="width:1110px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/05.png"/></a></figure><p id="245e1751-42f0-43ff-aa02-66008a45e6e8" class=""><strong>此处调用工具做了个论文检索</strong></p><figure id="886ce626-f3c8-4eb6-a4ad-e2562f2595a4" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/06.png"><img style="width:1110px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/06.png"/></a></figure><p id="6082e708-6cc8-4f09-a3ca-4f3302500be0" class=""><strong>此处调用工具做了网页的解析，需要注意LLM没有能力判别你所提供的URL是一个网页还是一个在线文档，所以做解析时需要明确告诉LLM，此时是解析网页，或者解析文档。</strong></p><figure id="3238901e-041f-4461-b4c4-d218ecc26265" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/07.png"><img style="width:1111px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/07.png"/></a></figure><figure id="ed56d92e-a6ab-4516-bcce-8b0c49ad9c89" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/08.png"><img style="width:1107px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/08.png"/></a></figure><p id="84c611e2-015b-4508-bb7c-6727bb570689" class=""><strong>此处调用工具做了谷歌搜索，这是一个预期外的动作。</strong></p><figure id="6b37708c-7ba1-4f38-a651-5b32a169dcb6" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/09.png"><img style="width:1107px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/09.png"/></a></figure><figure id="ebfdefbd-999d-43f9-aff2-58c6821359c9" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/10.png"><img style="width:1113px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/10.png"/></a></figure><p id="81a7c4f3-0ca8-468b-95db-b814526c581c" class=""><strong>这里调用了工具谷歌搜索，这个工具会将前二个搜索结果的网页进行解析，不过在生成论文内容时案例的引入不尽如人意。</strong></p><figure id="798e254e-ab19-4745-96f0-94ccdd44848a" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/11.png"><img style="width:1110px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/11.png"/></a></figure><figure id="66d76ff4-8881-4761-a3f5-74226b0b8eb4" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/12.png"><img style="width:1118px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/12.png"/></a></figure><p id="50706c9a-e296-4f39-a7ad-e020cf310fae" class=""><strong>这里调用查重工具，这里对整个引言做查重，LLM不一定能够从多轮对话中抽取正确的引言内容，所以在查重时重新复制了引言的内容做查重。但查重还有一种更简便的方式，后面有样例。</strong></p><figure id="052d2f3f-937a-4213-a535-f239254dc12d" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/13.png"><img style="width:1111px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/13.png"/></a></figure><figure id="1308aa2e-9305-4435-a5cf-867e26d7032f" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/14.png"><img style="width:1120px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/14.png"/></a></figure><figure id="40ff018f-e33b-4722-a1f7-870116018dfe" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/15.png"><img style="width:1115px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/15.png"/></a></figure><p id="ab8943b4-bc42-4f6f-9cd3-242169816f84" class=""><strong>这里调用工具谷歌搜索，从互联网引入了一些数据丰富论文内容。</strong></p><figure id="ed2f3500-e67c-42a7-beec-7271e8776134" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/17.png"><img style="width:1111px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/17.png"/></a></figure><figure id="36ceb43a-6775-4a0e-85d8-1471179254e6" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/18.png"><img style="width:1114px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/18.png"/></a></figure><p id="2db700a2-6740-49ee-9055-0f49b035c502" class=""><strong>这里调用查重工具，对刚生成的内容做了查重，和前面引言部分的查重差异点是LLM会从上轮对话里抽取要查重的内容，不需要再复制一次（这样会减少输入的Token数）。</strong></p><figure id="5e1d71bb-da19-452e-8e8e-5aec2c38a034" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/19.png"><img style="width:1114px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/19.png"/></a></figure><p id="4abd7ba1-b4ec-4446-a666-f41821f425bb" class=""><strong>这里使用工具谷歌学术搜索引擎，不过它并不会直接解析检索结果里的网址，所以在论文生成的时候只是简单引入了检索返回的简要信息（如果引用了后面会有一个数字）。可以要求LLM把引用出处提供出来（内容复制的话能看到引用的数字，和论文的引用保持一致）。</strong></p><figure id="0913e6e6-c365-4f13-999b-829e7f198cee" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/20.png"><img style="width:1116px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/20.png"/></a></figure><p id="83459d91-0bfd-439b-8ec3-3d9d9aedd3e9" class=""><strong>同样使用了工具学术搜索。</strong></p><figure id="cd372ccf-5c28-4838-b338-7eca98c593ab" class="image"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/21.png"><img style="width:1111px" src="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/21.png"/></a></figure><p id="672ef9d9-0f45-47a0-8569-4aad84272330" class=""><strong>这里做了一个查重。</strong></p><p id="39ea7b49-d42d-4ec9-ac72-39da731b93ae" class="">生成的论文：</p><figure id="34828f0c-6879-4e67-bb50-20f324db42b7"><div class="source"><a href="%E8%AE%BA%E6%96%87%E6%92%B0%E5%86%99%E4%B8%93%E5%AE%B6%20b502bd4694ed4457b3b1494109c77b46/%25E7%2594%259F%25E6%2588%2590%25E7%259A%2584%25E8%25AE%25BA%25E6%2596%2587.docx">生成的论文.docx</a></div></figure><p id="e1ebc446-dc13-498e-b622-a15b7ccb41ad" class="">
+</p><p id="2500cdb9-41ba-404e-acde-189ec267075a" class="">
+</p><p id="23293627-5805-4f35-b10e-b534b142748f" class="">202401备记，GPT-4-1106工具调用遇到一个问题，如果是中文，模型返回的回调参数偶尔会出现连续重复的\n，遇到的话可能需要在提示词里描述一下使用英文。</p><p id="1e6f1aa7-b8d8-4510-ab2a-3d043eaa99bb" class="">
+</p><p id="8ba51063-446c-45a2-8a55-b7f4c559dd7d" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
