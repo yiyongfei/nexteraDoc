@@ -1,0 +1,678 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>陪练师</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="88c45041-d86a-4361-8ec5-c2eec2573bd8" class="page sans"><header><h1 class="page-title">陪练师</h1><p class="page-description"></p></header><div class="page-body"><p id="519391a0-98b6-44cd-b6c3-836fa4afb93f" class="">陪练师在培训过程中扮演着重要的角色，通过个性化的辅导和实践机会，帮助学员巩固所学知识，提升技能水平，达到培训的目标。陪练师在培训中的主要作用有：</p><ol type="1" id="1bc957e2-c396-449a-a05d-f82629817388" class="numbered-list" start="1"><li><strong>个性化指导</strong>：针对每个学员的具体需求和学习进度，提供有针对性的辅导和练习。</li></ol><ol type="1" id="4f7d054f-a15e-4a95-b751-498638e1b49f" class="numbered-list" start="2"><li><strong>识别薄弱点</strong>：通过观察和测试，识别学员在知识和技能上的薄弱点，并提供相应的练习和建议。</li></ol><ol type="1" id="fee07391-2da9-4a05-b7e0-5c3268f0bacf" class="numbered-list" start="3"><li><strong>实践机会</strong>：提供实际操作和模拟练习的机会，帮助学员将理论知识应用于实践中。</li></ol><ol type="1" id="9f8d1e1a-bf92-4491-b003-540bfe766316" class="numbered-list" start="4"><li><strong>反馈与调整</strong>：及时给予学员反馈，帮助他们调整学习策略和方法，提高学习效果。</li></ol><ol type="1" id="e984920f-a76e-46df-986d-876144856926" class="numbered-list" start="5"><li><strong>动机提升</strong>：通过持续的鼓励和支持，提升学员的学习动力和自信心。</li></ol><p id="88f746fd-1640-4670-820f-6bacbe4273a5" class="">而在AIGC时代，AI可以代替人扮演陪练师这一角色，可以给培训行业带来许多显示的改变和优势：</p><ol type="1" id="c60d2200-e3c2-4d0d-b0e0-3241c2d76059" class="numbered-list" start="1"><li><strong>数据分析</strong>：AI可以通过分析学员的数据，识别学员知识薄弱点，可对其进行针对性练习加强。</li></ol><ol type="1" id="b954cbf3-15c7-4879-a8e2-2f6bf5b71e03" class="numbered-list" start="2"><li><strong>随时随地学习</strong>：AI可以24/7在线，学员可以随时进行练习和学习，不受时间地点的限制。</li></ol><ol type="1" id="6d810ae1-b2b4-4f1e-8d8b-e6638664917a" class="numbered-list" start="3"><li><strong>即时反馈</strong>：AI能够即时提供反馈和建议，帮助学员及时纠正错误，提升学习效果。</li></ol><ol type="1" id="e49ae8ec-efc6-40d6-8bc7-3e03bc4b71f0" class="numbered-list" start="4"><li><strong>一致性</strong>：AI能够保持一致的教学质量和标准，不会因个人情绪或状态影响教学效果。</li></ol><ol type="1" id="c65f5644-b19c-46c0-8e83-a6ed03e2abfe" class="numbered-list" start="5"><li><strong>降低成本</strong>：AI可以大幅降低人力成本，使得培训服务更加经济实惠。</li></ol><ol type="1" id="2d4443ad-956c-498c-8411-d869fe4760e8" class="numbered-list" start="6"><li><strong>规模化</strong>：AI可以同时辅导多个学员，提升培训机构的服务能力和覆盖范围。</li></ol><p id="dc590f94-ae67-4db0-84a5-9dd3aae0bb28" class="">通过NextERA以及强大的大模型基座，可以实现AI陪练师的基本职能，模拟实践场景，基于预先定义好的考点生成提问，学员回答后AI会分析学员的回答内容，并结合考点对应的考核点对回答内容进行评分，并提供一定程度上的学习建议。</p><p id="ea154b9a-6dbd-4dca-93ea-5aca3eae50bd" class="">陪练师这个应用大致的实现逻辑是：通过工具从题库里随机抽取一道题，然后交由大模型，大模型结合场景、人设出题，学员（用户）根据自己掌握的知识点回答AI（模拟人设）的提问，回答内容事先会通过预处理工具，该工具会将考核点和回答内容交给大模型（这里的大模型由工具触发），让模型对回答做评分（异步），预处理工具完成后再重新交给大模型，大模型会询问学员还有没有内容需要补充，当学员把所有知识点都补充完整后，应用再通过工具查询本次提问学员回答的评分情况，并对学员提供建议。</p><p id="e1c6a352-582c-43fa-bed3-599436f36d24" class=""><mark class="highlight-orange"><strong>陪练师这个应用涉及了场景模拟、出题、评分、查分、点评诸多事项，目前只做了OpenAI的GPT-4o模型做验证。</strong></mark></p><p id="ba82c691-f488-404d-9380-27386dfc2a51" class="">应用：</p><figure id="e69ee2b2-3c8b-42f1-a6c7-d720a365827e" class="image" style="text-align:left"><a href="%E9%99%AA%E7%BB%83%E5%B8%88%2088c45041d86a43618ec5c2eec2573bd8/Untitled.png"><img style="width:324px" src="%E9%99%AA%E7%BB%83%E5%B8%88%2088c45041d86a43618ec5c2eec2573bd8/Untitled.png"/></a></figure><p id="2551cc63-74bd-4ead-b1f5-541f8437813d" class="">陪练效果：</p><figure id="f98d7ec0-65cd-4e21-9d94-23211861450f" class="image"><a href="%E9%99%AA%E7%BB%83%E5%B8%88%2088c45041d86a43618ec5c2eec2573bd8/Untitled%201.png"><img style="width:1107px" src="%E9%99%AA%E7%BB%83%E5%B8%88%2088c45041d86a43618ec5c2eec2573bd8/Untitled%201.png"/></a></figure><p id="1dd20d50-ab1e-4ebb-9bca-a0ce28b637ea" class="">只需事先准备考点和考核点，提问的话术交由AI生成，可以降低题库整理的复杂度和时间。例如：</p><table id="1b0c6c71-b615-42e5-91f9-519fa0bc8078" class="simple-table"><tbody><tr id="e11f12d0-93e7-4215-8a4c-b19d2cb8a01a"><td id="ygll" class="" style="width:285px"><strong>考点（提问时，所涉及的提问点）</strong></td><td id="ipVX" class="" style="width:418px"><strong>考核点（考核陪练时，回答要涉及的点）</strong></td></tr><tr id="071f5333-0dea-483e-819e-69a741b3faef"><td id="ygll" class="" style="width:285px">蚌式引擎盖</td><td id="ipVX" class="" style="width:418px">正前方视野更好，盲区小 <br/>进气口位置高 <br/>最大涉水深度750mm <br/>风阻仅0.39，更省油 <br/>风噪小，更安静<br/></td></tr><tr id="42876bb0-82cb-4648-8388-29fb2c1238b3"><td id="ygll" class="" style="width:285px">四轮四角设计</td><td id="ipVX" class="" style="width:418px">四轮四角，空间利用最大化<br/>接近角、离去角更大，通过性更强<br/></td></tr><tr id="0977bfb2-7c7b-4e01-857a-f797aaab4a38"><td id="ygll" class="" style="width:285px">电动踏板</td><td id="ipVX" class="" style="width:418px">前后踏板分别可承重150KG<br/>越野模式自动进入锁闭状态，更加安全<br/></td></tr><tr id="5eef5d0f-3233-47ea-ba50-0d1c63ee20d0"><td id="ygll" class="" style="width:285px">无框车门</td><td id="ipVX" class="" style="width:418px">首创无框车门设计<br/>开闭角度大，手感轻<br/>四门玻璃均为绿色隔热玻璃，隔热效果更佳<br/>视野大<br/>结构硬<br/></td></tr><tr id="a9474139-7da3-45f6-9424-24915cef11cd"><td id="ygll" class="" style="width:285px">全LED灯组</td><td id="ipVX" class="" style="width:418px">原厂灯光照明亮度好，有转向辅助灯</td></tr><tr id="742b0e6d-4b2a-4a88-95e9-0174c6355803"><td id="ygll" class="" style="width:285px">全包式车门设计</td><td id="ipVX" class="" style="width:418px">全包覆式设计<br/>门槛与车内地板平齐设计<br/>门下段防刮条设计，避免剐蹭是损伤车漆<br/></td></tr><tr id="fe0cf204-7adc-4d51-add1-2443aad3908e"><td id="ygll" class="" style="width:285px">分体式尾门</td><td id="ipVX" class="" style="width:418px">上下分段式设计，将后备箱使用场景更多样化<br/>侧开式尾门，自带阻尼设计，支持在任意位置悬停<br/></td></tr><tr id="68cfc75b-a1e4-4e1d-91cc-05a14d53b8d0"><td id="ygll" class="" style="width:285px">可拆卸保险杠 + 可快拆轮眉</td><td id="ipVX" class="" style="width:418px">独立拆装设计<br/>易拆装设计<br/>轮眉更有灯光设计<br/></td></tr><tr id="85d42ae3-270f-4f87-8097-7cedac648787"><td id="ygll" class="" style="width:285px">多功能方向盘</td><td id="ipVX" class="" style="width:418px">奔驰同款触控<br/>3挡转向手感<br/>4向电调<br/>方向盘记忆<br/>方向盘加热<br/></td></tr><tr id="313e9930-c125-477b-ab8e-90404d480564"><td id="ygll" class="" style="width:285px">越野五联屏</td><td id="ipVX" class="" style="width:418px">大尺寸中控双联屏<br/>9英寸流媒体后视镜<br/></td></tr><tr id="44b7ace6-6d68-49aa-9efe-eec783a79b0b"><td id="ygll" class="" style="width:285px">可开启全景天窗</td><td id="ipVX" class="" style="width:418px">全球第二大天窗品牌英纳法<br/>1.2㎡超大尺寸全景天窗<br/>支持多种开关方式<br/></td></tr><tr id="6f6cad55-40cc-4bca-a82f-c068df54af41"><td id="ygll" class="" style="width:285px">奢享主驾</td><td id="ipVX" class="" style="width:418px">智能迎宾<br/>高坐姿、好视野<br/>通风和加热：均支持3个档位的设定<br/>座椅按摩：具备8个按摩模式，支持3档调节，缓解长途驾驶疲劳<br/>3挡位置记忆<br/>12向电调<br/></td></tr><tr id="a1357fa7-8ddf-4811-918a-29dae3b0e7cf"><td id="ygll" class="" style="width:285px">女王副驾</td><td id="ipVX" class="" style="width:418px">一键舒享<br/>一键小憩<br/>10向电调<br/></td></tr><tr id="eff2aeec-12b4-4960-adf2-ef3340c188d2"><td id="ygll" class="" style="width:285px">后排座椅靠背角度调节</td><td id="ipVX" class="" style="width:418px">后排长途舒适性更改好</td></tr><tr id="583e9b5b-a58f-47ff-8696-677c97bf49f6"><td id="ygll" class="" style="width:285px">双色化妆镜</td><td id="ipVX" class="" style="width:418px">大尺寸、双色温</td></tr><tr id="42ff9757-a72c-40df-bbeb-6a839cc3d8dd"><td id="ygll" class="" style="width:285px">手套箱、中央扶手箱的冷暖功能</td><td id="ipVX" class="" style="width:418px">手套箱和中央扶手箱可制冷制热</td></tr><tr id="582ea53c-fcf4-4291-a19b-a9087d3807b7"><td id="ygll" class="" style="width:285px">全车43处人性储物空间</td><td id="ipVX" class="" style="width:418px">储物空间丰富</td></tr><tr id="2228b550-76dd-426e-a0ee-f2df187a6f4d"><td id="ygll" class="" style="width:285px">256色氛围灯</td><td id="ipVX" class="" style="width:418px">根据心情来选择合适的颜色<br/>氛围灯安全提醒<br/></td></tr><tr id="d9ba2947-cda2-408e-905a-4ac3f4c02f0b"><td id="ygll" class="" style="width:285px">燕飞利仕音响</td><td id="ipVX" class="" style="width:418px">12个扬声器+1个外置功放的组合，攻放功率高达320w<br/>车内任何角落都可以享受顶级音响听觉感受<br/></td></tr><tr id="4bf5c006-4401-484a-a511-c8d6ec31f057"><td id="ygll" class="" style="width:285px">ANC主动降噪</td><td id="ipVX" class="" style="width:418px">ANC主动降噪<br/>大梁与车身连接优化<br/>优选静音高档轮胎<br/></td></tr><tr id="e0a84e84-a836-43bb-8c1a-761fc7832f9b"><td id="ygll" class="" style="width:285px">10个车内充电口</td><td id="ipVX" class="" style="width:418px">总共10个充电<br/>Gopro仪表台隐藏预留USB接口<br/>智能手机（华为闪充）50W无线充电<br/>400W逆变器支持笔记本电脑和制氧机<br/></td></tr><tr id="d377ea01-3ca6-4b0b-ae2a-6f53690d7f38"><td id="ygll" class="" style="width:285px">FCTA前横穿预警+FCTB前横穿制动</td><td id="ipVX" class="" style="width:418px">前方行人横穿预警制动</td></tr><tr id="d10a8413-802a-4963-bda4-9710c52baf07"><td id="ygll" class="" style="width:285px">RCTA倒车侧向警告+RCTB倒车侧向制动</td><td id="ipVX" class="" style="width:418px">倒车后方来车提醒<br/>主动介入制动避免碰撞<br/></td></tr><tr id="d7f4b61f-cad5-4d41-8700-d896f8c86472"><td id="ygll" class="" style="width:285px">TSR交通标识识别</td><td id="ipVX" class="" style="width:418px">识别车辆限速标识牌</td></tr><tr id="2473e294-2ccf-48f4-8c20-2dda45190e17"><td id="ygll" class="" style="width:285px">ACC自适应巡航控制</td><td id="ipVX" class="" style="width:418px">市区/高速跟车<br/>自适应巡航<br/></td></tr><tr id="3d3ca8e8-76f4-42b0-8a34-c639af3b3b29"><td id="ygll" class="" style="width:285px">LDW车道偏离预警+LKA车道保持辅助</td><td id="ipVX" class="" style="width:418px">车道保持<br/>车道偏离预警<br/></td></tr><tr id="99e5438d-ce6a-4925-9c71-2c0ab81f7b47"><td id="ygll" class="" style="width:285px">HWA高速公路变道辅助</td><td id="ipVX" class="" style="width:418px">高速打转向灯自动变道</td></tr><tr id="a85603f7-2a56-48b2-b29f-8413fbf0cfd4"><td id="ygll" class="" style="width:285px">TJA交通拥堵辅助</td><td id="ipVX" class="" style="width:418px">解放双脚</td></tr><tr id="a99a4216-8221-43eb-9999-bf038a091f1c"><td id="ygll" class="" style="width:285px">DOW开门预警</td><td id="ipVX" class="" style="width:418px">开门预警<br/>氛围灯联动<br/></td></tr><tr id="1ce5064e-d7de-45e5-a4b7-45b74fda136e"><td id="ygll" class="" style="width:285px">笼式车身结构内嵌式防滚架</td><td id="ipVX" class="" style="width:418px">军工级笼式车身<br/>内嵌式防滚架<br/>13个完整独立刚度环<br/></td></tr><tr id="6a90da73-cf88-4cd7-94a1-b930ad833eca"><td id="ygll" class="" style="width:285px">军工级越野底盘</td><td id="ipVX" class="" style="width:418px">一体式大梁<br/>承载能力强<br/>底盘技术成熟<br/>改装空间大<br/></td></tr><tr id="0ce7a236-3864-4ee5-854c-9aac18d31edf"><td id="ygll" class="" style="width:285px">整体桥式后悬架</td><td id="ipVX" class="" style="width:418px">通过性好<br/>可靠耐用<br/>改装潜力大<br/></td></tr><tr id="abe196b4-d13b-4a55-8918-08bac9e4d797"><td id="ygll" class="" style="width:285px">全新2.0T增压发动机</td><td id="ipVX" class="" style="width:418px">动力强<br/>专业调教<br/>可靠性高<br/>发动机舱散热好<br/></td></tr><tr id="a965dbd9-e971-4f10-bf5b-0a09f42be9cf"><td id="ygll" class="" style="width:285px">全新ZF 8AT变速箱</td><td id="ipVX" class="" style="width:418px">成熟度高<br/>承受扭矩大<br/></td></tr><tr id="6a542235-4cc5-456c-b876-b51f74ae23da"><td id="ygll" class="" style="width:285px">电控分时四驱</td><td id="ipVX" class="" style="width:418px">2H、4H、4L三个挡位<br/>电子旋钮<br/>放大扭矩输出<br/></td></tr><tr id="cc7a4b2d-3412-4e61-90e4-61f810ec1752"><td id="ygll" class="" style="width:285px">自研ATS</td><td id="ipVX" class="" style="width:418px">技术成熟<br/>模式众多+操作简洁<br/>沙地模式、泥地模式、冰雪模式、智能越野<br/></td></tr><tr id="982c5b36-18f7-4aa2-a8ce-12dc3ca9fe0a"><td id="ygll" class="" style="width:285px">12档蠕行模式</td><td id="ipVX" class="" style="width:418px">优秀的脱困能力<br/>强大的攀爬能力<br/>操作简单<br/></td></tr><tr id="9e78ee57-42ea-4207-ac17-55219d277a87"><td id="ygll" class="" style="width:285px">战术掉头</td><td id="ipVX" class="" style="width:418px">减小转弯半径</td></tr><tr id="a8d2f766-6b6a-47e9-9006-02a120619b4e"><td id="ygll" class="" style="width:285px">Ihold</td><td id="ipVX" class="" style="width:418px">上坡不溜车<br/>顺畅倒车<br/>比Auto Hold更为智能<br/></td></tr><tr id="d60d98a2-a416-44c8-a4fb-b3237eb8f676"><td id="ygll" class="" style="width:285px">越野拓展</td><td id="ipVX" class="" style="width:418px">增加越野可玩性<br/>针对提升越野性能<br/></td></tr><tr id="30b800cd-0391-402c-b525-7164066fdc2a"><td id="ygll" class="" style="width:285px">关注越野和户外露营的客户</td><td id="ipVX" class="" style="width:418px">2.5T大质量拖挂能力<br/>通用方扣拖车孔设计<br/></td></tr><tr id="54562eab-a5a6-4ab8-b909-44e8f09f8e22"><td id="ygll" class="" style="width:285px"></td><td id="ipVX" class="" style="width:418px"></td></tr><tr id="734d5097-bd40-4c37-8b78-ffbeb3a72d3a"><td id="ygll" class="" style="width:285px"></td><td id="ipVX" class="" style="width:418px"></td></tr></tbody></table><p id="d62ef363-0d60-48f1-8433-3b1bb523f478" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
