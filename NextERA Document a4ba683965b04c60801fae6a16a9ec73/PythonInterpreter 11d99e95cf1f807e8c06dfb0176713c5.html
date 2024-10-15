@@ -1,0 +1,897 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>PythonInterpreter</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="11d99e95-cf1f-807e-8c06-dfb0176713c5" class="page sans"><header><h1 class="page-title">PythonInterpreter</h1><p class="page-description"></p></header><div class="page-body"><h2 id="11d99e95-cf1f-805f-8478-d0e1243ba85d" class="">概述</h2><h3 id="11f99e95-cf1f-806a-8f2c-dbb290b6a26b" class="">1、应用入口</h3><p id="12099e95-cf1f-804f-84e7-c2e641eb8ea6" class=""><mark class="highlight-red"><strong>入口：</strong></mark>https://chat.nextera.chat</p><figure id="11f99e95-cf1f-8077-a409-d50d5fc9be8b" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E9%25A6%2596%25E9%25A1%25B5.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E9%25A6%2596%25E9%25A1%25B5.png"/></a></figure><figure id="11f99e95-cf1f-80c4-8e15-f8c614b46cb7" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25BA%2594%25E7%2594%25A8.png"><img style="width:288px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25BA%2594%25E7%2594%25A8.png"/></a></figure><p id="11f99e95-cf1f-8056-aebb-d2e9e3e4f702" class="">应用订阅之后，切回到首页，可以在主页面看到订阅成功的<strong>PythonInterpreter</strong>，点击该应用的聊天按钮即可开始您的Python之旅。</p><h3 id="11f99e95-cf1f-80aa-99d4-fdae762e020f" class="">2、应用说明</h3><p id="11f99e95-cf1f-80a7-af64-cbb5ca798fad" class="">PythonInterpreter结合了人工智能和编程的能力，允许用户通过自然语言和它进行交互，通过简单的语言描述来实现复杂的任务，它将人工智能的理解和执行能力与编程的灵活性和效率结合起来，帮助各种用户解决现实中遇到的各类问题。</p><h2 id="11d99e95-cf1f-80b0-ab0e-d3ca1ddf095b" class="">应用场景</h2><p id="11d99e95-cf1f-8052-a5c8-ff7bcbf35320" class="">PythonInterpreter提供了一个强大的平台，它允许用户通过自然语言指令来生成和执行代码，解决各种复杂问题。以下是PythonInterpreter的一些主要使用场景：</p><ol type="1" id="11d99e95-cf1f-807b-9d14-e789ec358027" class="numbered-list" start="1"><li>数据分析：AI可以根据用户的自然语言描述生成数据分析代码，并使用Code Interpreter执行，实现交互式的数据探索和可视化。</li></ol><ol type="1" id="11d99e95-cf1f-801c-a51f-dce7fe43c613" class="numbered-list" start="2"><li>编程教育：AI可以生成编程练习和示例，并通过Code Interpreter执行，为学生提供即时反馈。</li></ol><ol type="1" id="11d99e95-cf1f-804a-972b-c87032f44f96" class="numbered-list" start="3"><li>代码优化：AI可以分析现有代码，生成优化后的版本，并通过Code Interpreter直接获得结果。</li></ol><ol type="1" id="11f99e95-cf1f-80ee-ba2e-fca97788eee4" class="numbered-list" start="4"><li>图像处理：AI可以根据用户提供的图像，对指定图像做裁剪、合成、灰度处理、GIF动图、图片生成动画等等图像处理的工作。</li></ol><ol type="1" id="11d99e95-cf1f-8058-9a29-ed9df3a5d890" class="numbered-list" start="5"><li>图像识别：AI可以识别图像中的文字并将其摘取出来。</li></ol><ol type="1" id="11f99e95-cf1f-8006-8aa5-f694097d3640" class="numbered-list" start="6"><li>数据可视化：AI可以根据用户提供的数据（CSV、JSON）转换成PDF、HTML格式的表格或表单，用户可以更直观的观察数据。</li></ol><ol type="1" id="11d99e95-cf1f-80f4-b0b5-cc571909f6c3" class="numbered-list" start="7"><li>智能地理解、分析和解释数据：AI可以执行复杂的数据分析任务，提供有意义的见解。</li></ol><ol type="1" id="11d99e95-cf1f-8004-bf2d-d4644a22edca" class="numbered-list" start="8"><li>从图像中提取调色板：AI可以从图像中提取颜色以创建调色板，并处理大型图像的压缩。</li></ol><ol type="1" id="11d99e95-cf1f-80f0-ab3d-d1d2527b9902" class="numbered-list" start="9"><li>生成二维码：AI可以生成二维码，将链接地址快速转换为二维码图片。</li></ol><ol type="1" id="11f99e95-cf1f-8056-bcc5-e521bcbf33ea" class="numbered-list" start="10"><li>爬虫任务：AI可以爬取用户指定网页的内容，然后再取爬取结果做进一步处理。</li></ol><p id="11d99e95-cf1f-80ea-a9a3-f613c010f2cd" class="">以上场景展示了PythonInterpreter在不同领域的应用潜力，从教育到专业开发，都能提供有效的解决方案。</p><p id="11d99e95-cf1f-8030-9481-e045eec66e05" class=""><strong>声明</strong>：以下所有场景提供的示例所使用的大模型均是：Openai官方gpt-4o-mini(迷你版)。同时也验证了阿里云的千问模型。</p><h3 id="11d99e95-cf1f-80cd-abd5-d5acaea94c2b" class="">1、图像处理</h3><p id="11d99e95-cf1f-80af-8665-fe621eeb7b71" class="">可以对指定图片做切分、拼凑、生成Gif动图、生成二维码等等图像处理工作。大模型根据你的指令生成Python代码然后交给Python代码解释器去执行并返回执行结果。</p><figure id="11d99e95-cf1f-80f0-9d79-c01ab903bb29" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%259B%25BE%25E5%2583%258F%25E5%25A4%2584%25E7%2590%2586.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%259B%25BE%25E5%2583%258F%25E5%25A4%2584%25E7%2590%2586.png"/></a></figure><p id="11d99e95-cf1f-8040-bf30-f09a1b575377" class=""><strong>示例所用图片</strong></p><p id="11d99e95-cf1f-8070-ba19-c136357f7842" class="">图片链接：<a href="https://www.changbiyuan.com/2022/0719/16897308322.png">https://www.changbiyuan.com/2022/0719/16897308322.png</a></p><p id="11d99e95-cf1f-8066-9b46-cb26c28b4e5b" class="">备用链接：<a href="https://nextera-chat.oss-cn-shanghai.aliyuncs.com/material/16897308322.png">https://nextera-chat.oss-cn-shanghai.aliyuncs.com/material/16897308322.png</a></p><h3 id="11e99e95-cf1f-802d-bf65-d5487df873d2" class="">2、图像文字识别</h3><p id="11e99e95-cf1f-8038-8eb7-d573e1ba928b" class="">提供包含文字的图片，由大模型生成代码并执行，以获得图片里的文字内容。</p><p id="11f99e95-cf1f-8089-bfcb-d187fb1b29f6" class="">示例所使用的图片：<a href="https://nextera-chat.oss-cn-shanghai.aliyuncs.com/material/34a0585acf.png">https://nextera-chat.oss-cn-shanghai.aliyuncs.com/material/34a0585acf.png</a></p><figure id="11f99e95-cf1f-800c-ae38-ca1931785a84" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%259B%25BE%25E5%2583%258F%25E8%25AF%2586%25E5%2588%25AB.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%259B%25BE%25E5%2583%258F%25E8%25AF%2586%25E5%2588%25AB.png"/></a></figure><h3 id="11d99e95-cf1f-808b-b2aa-ec4046146b09" class="">3、金融计算</h3><p id="11d99e95-cf1f-80d2-ae02-c5e17fdaa297" class="">可以完成复利计算、收益预估、风险计算等等金融计算工作。大模型会按照你的要求生成Python代码，然后交给Python代码解释器去执行并返回执行结果。</p><p id="11d99e95-cf1f-80b4-8e50-eeb12fb319ef" class=""><strong>注意</strong>：计算风险价值(VaR)使用了yahoo的财经数据，国内并不能直接获取yahoo财经数据，需要将CodeInterpreter部署在海外才可以正常获取。</p><figure id="11d99e95-cf1f-8084-a775-faff5eb8ab7b" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E9%2587%2591%25E8%259E%258D%25E8%25AE%25A1%25E7%25AE%2597.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E9%2587%2591%25E8%259E%258D%25E8%25AE%25A1%25E7%25AE%2597.png"/></a></figure><p id="11d99e95-cf1f-8069-8d6b-fde302755566" class="">需要安装yfinance获取财经数据</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-8065-899d-ef5e658b2670" class="code"><code class="language-Shell">pip install yfinance</code></pre><h3 id="11d99e95-cf1f-8013-9e1a-d9d1f7be9df9" class="">4、科学计算数学建模</h3><p id="11e99e95-cf1f-8079-9e0f-dd24da5c3d38" class="">提供指定的数据集并设置调优参数，可进行各种模型的效果验证。</p><p id="11e99e95-cf1f-804b-ad16-ea63c37bd4e4" class="">示例使用波士顿房价数据做回归分析，验证数据集在此：<a href="https://nextera-chat.oss-cn-shanghai.aliyuncs.com/dataset/BostonHousePrices.csv">https://nextera-chat.oss-cn-shanghai.aliyuncs.com/dataset/BostonHousePrices.csv</a></p><figure id="11e99e95-cf1f-8045-886e-c68cce4ae184" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E7%25A7%2591%25E5%25AD%25A6%25E8%25AE%25A1%25E7%25AE%2597.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E7%25A7%2591%25E5%25AD%25A6%25E8%25AE%25A1%25E7%25AE%2597.png"/></a></figure><h3 id="11d99e95-cf1f-80bf-ac29-dc625c249fa3" class="">5、数据分析</h3><p id="11d99e95-cf1f-8066-8f70-e80fc6fc263e" class="">可以对用户指定的数据集进行各个维度的数据分析，可以生成各类可视化结果比如直方图、饼图、拆线图、散点图、热力图等等。</p><p id="11f99e95-cf1f-801d-a79b-e53af466b2da" class="">示例使用数据：<a href="https://nextera-chat.oss-cn-shanghai.aliyuncs.com/dataset/BostonHousePrices.csv">https://nextera-chat.oss-cn-shanghai.aliyuncs.com/dataset/BostonHousePrices.csv</a></p><p id="11d99e95-cf1f-803f-94ab-cff802e7a787" class=""><strong>注意</strong>：如果生成的可视化结果包含了中文并且出现乱码现象，可以告诉大模型让其做中文化处理，容器已预装了开源中文字体，提示词里也预设置了中文处理的代码片段。</p><figure id="11d99e95-cf1f-805a-9ad5-df4988434459" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E6%2595%25B0%25E6%258D%25AE%25E5%2588%2586%25E6%259E%2590.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E6%2595%25B0%25E6%258D%25AE%25E5%2588%2586%25E6%259E%2590.png"/></a></figure><h3 id="11f99e95-cf1f-8018-9fdc-de74bbb4b517" class="">6、数据可视化</h3><p id="11f99e95-cf1f-809b-ae49-ed8848b7d973" class="">将指定格式的数据（CSV、JSON等格式）转换成PDF、HTML格式的表格或表单，这样可以让用户更直观的观察数据。</p><p id="11f99e95-cf1f-80ff-a395-e2aae42ed691" class="">示例使用数据：<a href="https://nextera-chat.oss-cn-shanghai.aliyuncs.com/dataset/BostonHousePrices.csv">https://nextera-chat.oss-cn-shanghai.aliyuncs.com/dataset/BostonHousePrices.csv</a></p><figure id="11f99e95-cf1f-800d-9f43-c2e0d8f7fee2" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E6%25A0%25BC%25E5%25BC%258F%25E8%25BD%25AC%25E6%258D%25A2.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E6%25A0%25BC%25E5%25BC%258F%25E8%25BD%25AC%25E6%258D%25A2.png"/></a></figure><p id="11f99e95-cf1f-8014-a489-d9faf95a5ecd" class="">生成的表格在此：</p><p id="11f99e95-cf1f-80ae-8f0d-f7d9c02826bd" class=""><a href="https://contabo.nextera.chat/nextera-images/20241014/eca619cb97055458eeb3e1606836dee3.pdf?AWSAccessKeyId=8a8a4cf81530e22deb1ef0ca30e7f237&amp;Expires=1729166011&amp;Signature=UIWSUGndxFOGj2bBUP7G1kAf%2B34%3D">PDF表格</a></p><figure id="11f99e95-cf1f-8029-9dcf-d5bebcf4b950" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image.png"><img style="width:707.953125px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image.png"/></a></figure><p id="11f99e95-cf1f-80ad-9142-cc9ed995e626" class=""><a href="https://contabo.nextera.chat/nextera-images/20241014/f3862eb1d73ca0022f2dd76db841f21b.html?AWSAccessKeyId=8a8a4cf81530e22deb1ef0ca30e7f237&amp;Expires=1729166642&amp;Signature=5xN%2BNR%2FkLFZStmIOflQgdO8CUJA%3D">HTML表格</a></p><figure id="11f99e95-cf1f-8078-ac4d-ebf9fbff7fd5" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%201.png"><img style="width:707.96875px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%201.png"/></a></figure><h3 id="11d99e95-cf1f-800d-9f24-d3d293beab44" class="">7、爬虫</h3><p id="11d99e95-cf1f-80bf-bad8-f162b1ec432d" class="">目前互联网网页很多有防爬机制，而且对目标网页爬取内容之前需要对网页结构做些了解，不推荐让大模型直接生成代码去爬取内容，成功概率比较小。</p><p id="11f99e95-cf1f-8092-b594-f38d207cddd7" class="">下面是一个简单网页的爬虫示例：</p><p id="11f99e95-cf1f-8080-aa07-e94ad517f635" class="">我希望你能爬一下http://www.xinhuanet.com/20240422/e4f8c160346b4de1be833ffb3e4f80d0/c.html这个网页的新闻内容，新闻内容集中在&lt;span id=&quot;detailContent&quot;&gt;里面的p标签里。</p><figure id="11f99e95-cf1f-80c3-bc1d-e4ecf40720c0" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E7%2588%25AC%25E8%2599%25AB.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E7%2588%25AC%25E8%2599%25AB.png"/></a></figure><p id="11d99e95-cf1f-802a-808a-d8b73f559455" class="">爬取内容：<a href="https://contabo.nextera.chat/nextera-images/20241014/208dfbf064d6a1a7be51cf7592ce6168.txt?AWSAccessKeyId=8a8a4cf81530e22deb1ef0ca30e7f237&amp;Expires=1729159721&amp;Signature=fBJFGwd%2B9%2FKatqJR8O6VpRhC6M0%3D">https://contabo.nextera.chat/nextera-images/20241014/208dfbf064d6a1a7be51cf7592ce6168.txt?AWSAccessKeyId=8a8a4cf81530e22deb1ef0ca30e7f237&amp;Expires=1729159721&amp;Signature=fBJFGwd%2B9%2FKatqJR8O6VpRhC6M0%3D</a></p><h3 id="11f99e95-cf1f-80ae-be92-e5c1d661d2ed" class="">8、词云图</h3><p id="11f99e95-cf1f-8061-83cb-d2d3f5627478" class="">根据前述爬的新闻内容（7、爬虫）统计词的使用频率，用词云图的方式做展示。</p><figure id="11f99e95-cf1f-805d-bec8-e000eb62b83d" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E8%25AF%258D%25E4%25BA%2591%25E5%259B%25BE.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E8%25AF%258D%25E4%25BA%2591%25E5%259B%25BE.png"/></a></figure><p id="11f99e95-cf1f-8040-85e6-f6d63ebb6c80" class="">
+</p><h2 id="11d99e95-cf1f-806f-812d-cc922482a806" class="">私有化部署Python CodeInterpreter</h2><p id="11d99e95-cf1f-80f1-9eab-d2acdfad7c21" class="">CodeInterpreter功能非常强大，但它也存在一些让人无法忽视的点阻碍了用户的使用：</p><p id="11d99e95-cf1f-80cd-9dca-ff98d5bd1cb3" class="">1)能力受限，原生CodeInterpreter的能力依赖预装库，您没有办法安装外部工具；</p><p id="11d99e95-cf1f-805a-b371-c72255bc466c" class="">2)数据安全，原生CodeInterpreter做为一个SAAS服务，执行代码所涉及的数据必须上传服务提供商才可以正常运行，对于核心数据存在泄露风险；</p><p id="11d99e95-cf1f-8098-8b5d-c13dcbb6b75e" class="">3)网络访问限制，原生CodeInterpreter考虑安全因素，不能访问因特网，当您需要企业内外部数据时除了上传给它，CodeInterpreter没有办法直接访问它；</p><p id="11f99e95-cf1f-80f0-a85a-ec50f7f9e602" class="">4)所存储的结果短期内就会失效，无法在后续较长一段时间复用之前的处理结果；</p><p id="11d99e95-cf1f-80d0-8032-cc9bc6670f2f" class="">而CodeInterpreter的私有化部署却是解决上述问题的良方，因为CodeInterpreter部署在用户端，用户拥有CodeInterpreter的所有权限对其做操作，可以无限增强它的能力，同时因为代码在用户端执行，所有的数据都在用户端使用，除了用户需要查看的结果会给服务方和大模型，其它数据不存在任何外泄可能。</p><p id="12099e95-cf1f-8019-a34e-d204a5ad077b" class=""><strong>必备条件</strong>：</p><p id="12099e95-cf1f-802e-980c-ddd09df0ca30" class="">1、部署代码解释器的服务器(或VPS)具备公网IP并且服务器本身可以访问公网，NextERA执行代码时需要远程访问代码解释器。</p><p id="12099e95-cf1f-806d-a2ac-e994133326a9" class="">2、私有化代码解释器如果需要访问您内部的数据或服务，需要自行设置网络策略。</p><h3 id="11d99e95-cf1f-80c8-92e3-f586faa97b11" class="">1、生成密钥并获取AppID</h3><p id="11d99e95-cf1f-8054-850d-c25c0cda88d1" class="">Python代码解释器环境部署需要用户的私钥，所以需要预先生成应用密钥，生成后请记录并保存好AppID。</p><figure id="11d99e95-cf1f-80ba-9dbd-d774356a991c" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25BA%2594%25E7%2594%25A8%25E5%25AF%2586%25E9%2592%25A5.png"><img style="width:707.96875px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25BA%2594%25E7%2594%25A8%25E5%25AF%2586%25E9%2592%25A5.png"/></a></figure><p id="11d99e95-cf1f-806d-8275-ec6d728ba141" class="">代码解释器会在启动时根据AppID获取私钥，所以只需记录并保存好AppID即可(app.开头)。</p><p id="11d99e95-cf1f-8009-a744-d4fd6b8fab8b" class=""><strong>注意</strong>：密钥每个用户只存在一个有效密钥，每次重新生成后原密钥会同时失效，原密钥一旦失效代码解释器就需要重新启动。非必要情况请勿随意重置密钥。</p><h3 id="11d99e95-cf1f-80ff-85de-f2922c2d2b3f" class="">2、部署Python代码解释器环境</h3><p id="11d99e95-cf1f-8035-9ada-e06df007038c" class=""><strong>2.1 拉取镜像</strong></p><p id="11d99e95-cf1f-8081-9328-eaff9981e095" class="">国内镜像</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-8048-aea6-d5e16a544d02" class="code"><code class="language-Shell">docker pull registry.cn-hangzhou.aliyuncs.com/nexterachat/code-interpreter</code></pre><p id="11d99e95-cf1f-800c-b73c-fa52b3960861" class="">国外镜像</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-80bf-934a-c41a37546af0" class="code"><code class="language-Shell">docker pull nexterachat/code-interpreter</code></pre><p id="11d99e95-cf1f-80df-a148-f2651d47cc86" class=""><strong>2.2 启动容器</strong></p><p id="11d99e95-cf1f-80c5-9844-e43e80212d27" class="">国内镜像</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-8078-8aa4-ce0454b07fc0" class="code"><code class="language-Shell">docker run -d -p 28888:28888 -p 28899:28899 -e CODE_INTERPRETER_APPID={app_id} registry.cn-hangzhou.aliyuncs.com/nexterachat/code-interpreter:latest</code></pre><p id="11d99e95-cf1f-8013-becc-f7257525507e" class="">国外镜像</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-80cb-b9d8-c5221fac29b7" class="code"><code class="language-Shell">docker run -d -p 28888:28888 -p 28899:28899 -e CODE_INTERPRETER_APPID={app_id} nexterachat/code-interpreter:latest</code></pre><p id="11d99e95-cf1f-80fc-8433-ded12ecb895e" class="">启动容器设置的变量CODE_INTERPRETER_APPID，使用前述生成密钥里的AppID。</p><p id="11d99e95-cf1f-8064-9b28-c1b58127c260" class="">容器启动后开启二个端口：28888、28899，其中28888是Jupyter，28899是代码解释器。需要防火墙放行28899，如果要使用Jupyter做代码本地验证可放行28888。</p><figure id="11d99e95-cf1f-8042-93a5-ce3e11fb029e" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%202.png"><img style="width:707.921875px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%202.png"/></a></figure><p id="11d99e95-cf1f-8073-bf24-d44cf3420e28" class="">容器说明：</p><p id="11d99e95-cf1f-80a7-8dd5-f1a96697e179" class="">1)通过docker exec -it 容器id bash进入容器内部，进入内部后可以管理包或工具。</p><p id="11d99e95-cf1f-80b0-a56f-f1fa5a9e376d" class="">2)容器基于RockyLinux构建，通过dnf或yum做包管理即可。</p><p id="11d99e95-cf1f-8043-92f9-ccd42152755d" class="">3)预装了Anaconda，Python工具可以通过conda或pip来管理。</p><p id="11d99e95-cf1f-8056-a862-d8d862ee4d95" class="">4)Jupyter的登录Token可在Jupyter日志查看，日志路径：/var/log/jupyter.err.log。</p><p id="11d99e95-cf1f-809b-affb-d23a7e8d4845" class="">5)代码解释器的日志路径：/var/log/jupyter.err.log，可以查看执行情况。</p><h3 id="11d99e95-cf1f-80fb-b47e-fcec73bdf6cb" class="">3、增强代码解释器服务能力</h3><p id="11d99e95-cf1f-80a8-b4d7-d079e6658e25" class="">代码解释器预装了Anaconda，已经具备了一些统计分析科学计算等能力，但是如果预装的工具满足不了需要时(例如生成二维码、图像识别)，此时您可以进入容器通过dnf或pip安装工具，从而增强代码解释器的服务能力。</p><p id="11d99e95-cf1f-8088-afa4-f4125e12662e" class="">3.1 查看容器ID</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-8019-a26b-c84948952286" class="code"><code class="language-Shell">docker ps</code></pre><figure id="11d99e95-cf1f-80df-8bcb-f4cc27398666" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%203.png"><img style="width:707.890625px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%203.png"/></a></figure><p id="11d99e95-cf1f-803b-b34b-f0f907dc28f9" class="">复制 CONTAINER ID（例如71a4f0e3ef64）。</p><p id="11d99e95-cf1f-8085-9317-debfd0a2fbdc" class="">3.2 进入容器</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-80f4-8555-cdf4706f8adf" class="code"><code class="language-Shell">docker exec -it 71a4f0e3ef bash</code></pre><figure id="11d99e95-cf1f-80b4-b8a7-e0b27659cb52" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%204.png"><img style="width:581px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%204.png"/></a></figure><p id="11d99e95-cf1f-80cf-b6f7-c69f3003a1ac" class="">3.3 安装工具或包</p><p id="11d99e95-cf1f-808e-85fd-ca330169f9ce" class="">比如说需要增加神经网络的算法，可以安装tensorflow，此时：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-80b3-b7cf-f52faff27d8d" class="code"><code class="language-Shell">pip install tensorflow</code></pre><p id="11d99e95-cf1f-8066-8461-f31ea8bbc213" class="">比如说需要增加图像识别的能力，可以安装tesseract，此时：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-8081-bd5e-ec8f55f1e305" class="code"><code class="language-Shell">dnf install tesseract tesseract-langpack-chi_sim -y
+pip install pytesseract</code></pre><p id="11d99e95-cf1f-803d-9767-dc4da111b562" class="">比如说需要生成二维码，此时：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-807c-b6cb-c9240373e0fd" class="code"><code class="language-Shell">
+pip install qrcode</code></pre><p id="11d99e95-cf1f-8004-a228-d2a363e28173" class="">代码解释器在执行代码时，如果所生成的代码里引用了未安装的Module，它会告诉您某某Module未安装，您可以让大模型告诉您安装这些Module的命令是什么，然后自行安装。 </p><p id="11d99e95-cf1f-8054-b1f5-d3188cd8de05" class="">考虑安全因素，代码解释器不提供自动安装包或工具的能力，需要您手工安装。</p><p id="11f99e95-cf1f-804d-b50b-f8856a9e71d8" class="">3.4 工具或包安装之后如果需要重启应用才能生效，可以通过以下命令重启codeInterpreter应用。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11f99e95-cf1f-8002-8a1a-f5cb743d3676" class="code"><code class="language-Shell">supervisorctl restart code_interpreter</code></pre><h3 id="11d99e95-cf1f-8015-996a-f9ec776a9665" class="">4、接入新部署的代码解释器</h3><p id="11d99e95-cf1f-8006-8908-e66ae1bee2c6" class="">通过平台提供的工具管理接入代码解释器。</p><figure id="11d99e95-cf1f-80ef-92ef-d2f770414cdf" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25B7%25A5%25E5%2585%25B7%25E7%25AE%25A1%25E7%2590%2586.png"><img style="width:707.953125px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25B7%25A5%25E5%2585%25B7%25E7%25AE%25A1%25E7%2590%2586.png"/></a></figure><p id="11d99e95-cf1f-80d7-aa00-f1983d84efde" class=""><strong>4.1 定义工具</strong></p><figure id="11d99e95-cf1f-80bb-be9f-ff9e5e321f87" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25AE%259A%25E4%25B9%2589%25E5%25B7%25A5%25E5%2585%25B7.png"><img style="width:432px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25AE%259A%25E4%25B9%2589%25E5%25B7%25A5%25E5%2585%25B7.png"/></a></figure><p id="11d99e95-cf1f-80fa-8265-f6683d8c2bd0" class="">在工具代码里填写代码解释器的代码：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-80de-9ad1-d6a40cbfc493" class="code"><code class="language-Shell">package com.chat.gpt.plugins.impl;
+
+import java.util.HashMap;
+import java.time.Duration;
+
+import com.chat.gpt.plugins.define.AbstractCodeInterpreterService;
+import com.chat.gpt.plugins.define.FunctionAnnotation;
+import com.chat.gpt.plugins.dto.ToolCallResult;
+import com.chat.gpt.plugins.web.response.RestResponse;
+
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+
+public class PythonExecutionTool extends AbstractCodeInterpreterService {
+    private static final String pluginsUrl = &quot;http://127.0.0.1:28899/api/tools/codeExecutor&quot;;
+    @FunctionAnnotation(name = &quot;executePython&quot;, type = &quot;consumer&quot;, handleException = false, signType = &quot;RSA&quot;, describe = &quot;MUST be used for accurate calculations: math, sorting, filtering, aggregating, string processing, etc&quot;)
+    public ToolCallResult executePython(@FunctionAnnotation(name = &quot;code&quot;, describe = &quot;Generate Python code that absolutely must include a return statement. If multiple values are involved, they must be assigned to a variable, and only that variable should be returned.&quot;,required = true) String code,
+@FunctionAnnotation(name = &quot;valueVariable&quot;, describe = &quot;The variable name that holds the return value when Python code is executed.In result = 2 + 2, the variable name is result.&quot;,required = true) String valueVariable) throws Exception {
+    	HashMap&lt;String, Object&gt; params = new HashMap&lt;&gt;();
+        params.put(&quot;code&quot;, code);
+        params.put(&quot;codeVariable&quot;, valueVariable);
+        params.put(&quot;permittedLanguage&quot;, &quot;python&quot;);
+        params.put(&quot;executor&quot;, &quot;jep&quot;);
+        try {
+        	HttpUrl httpUrl = getHttpUrl(pluginsUrl);
+     		RequestBody jsonBody = RequestBody.create(MediaType.parse(&quot;application/json&quot;), beanToJson(params));
+     		Request httpRequest = newRequestBuilder(httpUrl).post(jsonBody).build();
+			// connectTimeout  readTimeout  writeTimeout
+     		RestResponse&lt;String&gt; response = executeHttp(httpUrl, httpRequest, null, Duration.ofSeconds(600), Duration.ofSeconds(120));
+     		if (response.getCode() == 20000) {
+     			return new ToolCallResult(response);
+     		} else {
+     			return new ToolCallResult(response.getMessage(), null, null);
+     		}
+        } catch (Exception ex) {
+        	throw ex;
+        }
+    }
+	@Override
+	public Object[] testData() {
+		return new Object[]{&quot;result=\&quot;hello world\&quot;;result&quot;,&quot;result&quot;};
+	}
+	@Override
+	public String revealAllTheDetails() {
+		return &quot;执行失败,请联系管理员&quot;;
+	}
+}</code></pre><p id="11d99e95-cf1f-8018-a5f8-c028d892788f" class=""><strong>注意</strong>：上述代码只需修改pluginsUrl里的IP：127.0.0.1，将它改成私有化代码解释器公网暴露的IP。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-8077-b826-f932e987251f" class="code"><code class="language-Shell">private static final String pluginsUrl = &quot;http://127.0.0.1:28899/api/tools/codeExecutor&quot;;</code></pre><p id="11d99e95-cf1f-801a-b2b1-cb61a7ec94d6" class=""><strong>4.2 测试工具(确认之后)</strong></p><figure id="11d99e95-cf1f-8039-8502-d798da58b24c" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E6%25B5%258B%25E8%25AF%2595%25E5%25B7%25A5%25E5%2585%25B7.png"><img style="width:432px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E6%25B5%258B%25E8%25AF%2595%25E5%25B7%25A5%25E5%2585%25B7.png"/></a></figure><p id="11d99e95-cf1f-8018-b7e7-f8b03dcd5e80" class=""><strong>4.3 激活工具(测试通过之后)</strong></p><figure id="11d99e95-cf1f-806e-b685-dd1b43027534" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E6%25BF%2580%25E6%25B4%25BB%25E5%25B7%25A5%25E5%2585%25B7.png"><img style="width:432px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E6%25BF%2580%25E6%25B4%25BB%25E5%25B7%25A5%25E5%2585%25B7.png"/></a></figure><p id="11d99e95-cf1f-801f-9c39-eeb546fcf355" class="">
+</p><h3 id="11d99e95-cf1f-80d7-84cc-c65331646d31" class="">5、创建新应用，并关联新创建的代码解释器工具</h3><figure id="11d99e95-cf1f-806a-bebb-f7dfb6570bc7" class="image"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%205.png"><img style="width:707.984375px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%205.png"/></a></figure><p id="11d99e95-cf1f-80a2-9eca-dbc824db1ebc" class=""><strong>5.1 定义应用</strong></p><figure id="11d99e95-cf1f-80a4-bd3d-c01f12b37dfd" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%206.png"><img style="width:432px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%206.png"/></a></figure><p id="11d99e95-cf1f-809d-b802-d594f396f827" class="">创建应用时对话轮次建议设置多一些，防止丢失对话上下文。</p><p id="11d99e95-cf1f-8099-8e75-e92a8533325a" class="">TopP、Temperature设0.1。模型根据预算选择，Openai官方的gpt-4o-mini长期免费。</p><p id="11d99e95-cf1f-80fb-9d9b-ea7a85559774" class=""><strong>5.2 关联前述所创建的工具</strong></p><figure id="11d99e95-cf1f-8067-a313-e65b79e9dbb6" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%207.png"><img style="width:336px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/image%207.png"/></a></figure><figure id="11d99e95-cf1f-80d7-8fda-ec9c79b13421" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%2585%25B3%25E8%2581%2594%25E5%25B7%25A5%25E5%2585%25B7.png"><img style="width:480px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%2585%25B3%25E8%2581%2594%25E5%25B7%25A5%25E5%2585%25B7.png"/></a></figure><p id="11d99e95-cf1f-8091-afe2-ce326c28ad74" class="">点击按钮关联，就会将该工具和应用做关联。大模型在接收到您的指令时会自行判断是否调用代码解释器以执行代码。</p><p id="11d99e95-cf1f-80ac-9773-fca2d7ab7607" class=""><strong>5.3 设置系统提示词</strong></p><figure id="11d99e95-cf1f-8044-b5d7-c4e2a2558ba4" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25BA%2594%25E7%2594%25A8%25E8%258F%259C%25E5%258D%25952.png"><img style="width:336px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25BA%2594%25E7%2594%25A8%25E8%258F%259C%25E5%258D%25952.png"/></a></figure><figure id="11d99e95-cf1f-805f-b6f4-c403a58d45a1" class="image" style="text-align:left"><a href="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25BA%2594%25E7%2594%25A8%25E8%25AE%25AD%25E7%25BB%2583.png"><img style="width:528px" src="PythonInterpreter%2011d99e95cf1f807e8c06dfb0176713c5/%25E5%25BA%2594%25E7%2594%25A8%25E8%25AE%25AD%25E7%25BB%2583.png"/></a></figure><p id="11d99e95-cf1f-808a-82c4-fe58cb1cead8" class="">在训练指令里填写系统提示词，参考提示词：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11d99e95-cf1f-809b-b492-ecc4b96b6895" class="code"><code class="language-Shell"># Role: PythonInterpreter
+
+## Profile
+
+- **Language**: Chinese
+- **Description**: You are a Python Code Interpreter responsible for analyzing and breaking down user tasks, converting solutions into Python code, and assisting users in completing tasks by executing the Python code.
+
+## Rules
+
+### Code Generation Rules
+
+1. **Code Requirements**:
+   - Must include detailed comments.
+   - Code must be complete, readable, maintainable, and executable.
+
+2. **File and Image Storage**:
+   - Unless specifically instructed by the user, all file and image storage operations should not be performed locally. Instead, use the `nexteratools` tool to upload content to the network.
+   - Embed the following steps into the original code for upload operations:
+     1. Remove any `plt.show()` calls to prevent visualization content from being unsaved or unuploaded.
+     2. Import `from io import BytesIO` and `import nexteratools.uploadFile as neuf` for handling file storage and uploads.
+     3. Use `matplotlib.pyplot`&#x27;s `savefig(buffer)` method to save visualization content to a `BytesIO` buffer.
+     4. Use `nexteratools.uploadFile`&#x27;s `uploadFileByBytesIO(buffer)` method to upload the content from the buffer.
+     5. Finally, close the buffer using `buffer.close()`.
+     6. Reference Code:
+
+        - **Original Code**:
+          ```python
+          import matplotlib.pyplot as plt
+          
+          X = [1, 2, 3, 4]
+          y = [1, 4, 9, 16]
+          plt.plot(X, y)
+          plt.title(&quot;Sample Plot&quot;)
+          plt.show()
+          result = {&quot;X&quot;: X, &quot;y&quot;: y}
+          ```
+
+        - **Modified Code**:
+          ```python
+          import matplotlib.pyplot as plt
+          
+          X = [1, 2, 3, 4]
+          y = [1, 4, 9, 16]
+          plt.plot(X, y)
+          plt.title(&quot;Sample Plot&quot;)
+          result = {&quot;X&quot;: X, &quot;y&quot;: y}
+          
+          from io import BytesIO
+          import nexteratools.uploadFile as neuf
+          
+          buffer = BytesIO()
+          plt.savefig(buffer)
+          presignedUrl = neuf.uploadFileByBytesIO(buffer)
+          buffer.close()
+          result[&quot;presignedUrl&quot;] = presignedUrl
+          result
+          ```
+
+3. **Result Integration**:
+   - All stored files, images, etc., must be integrated with the original output content and returned together.
+
+4. **Handling Chinese Fonts in Visualizations**:
+   - If the visualization content includes Chinese characters, handle font settings as follows:
+     1. Import `import matplotlib.font_manager as fm` for font management.
+     2. Set the font path and manage global fonts using `fm`.
+     3. Reference Code:
+
+        ```python
+        import matplotlib.pyplot as plt
+        import matplotlib.font_manager as fm
+        
+        # Set font
+        font_path = &#x27;/usr/share/fonts/google-noto-cjk/NotoSansCJK-Regular.ttc&#x27;  # Replace with actual font path
+        font_prop = fm.FontProperties(fname=font_path)
+        plt.rcParams[&#x27;font.family&#x27;] = font_prop.get_name()
+        ```
+
+### Code Execution Rules
+
+1. **Preparation for Execution**:
+   - The code must be ready for execution, including all necessary imports and dependencies.
+
+2. **Return Value Requirements**:
+   - The code must have a return value that meets the user&#x27;s expectations.
+
+3. **Executability**:
+   - The code must be executable without missing any essential parts.
+
+## Workflow
+
+1. **Introduction**:
+   - Greet the user and introduce yourself.
+   - Ask the user how you can assist them.
+
+2. **Task Reception and Analysis**:
+   - User provides the task they want you to help with.
+   - Analyze the steps required to complete the task.
+     - Take a deep breath and work on this problem step-by-step.
+     - Determine if the task can be completed by writing Python code.
+       - **If not suitable**:
+         - Provide suggestions based on your knowledge.
+         - Return to **Step 2** to let the user provide a new task.
+       - **If suitable**:
+         - Analyze the steps and logical flow needed to accomplish the task with Python code.
+         - If clarification is needed, ask the user relevant questions.
+
+3. **Code Generation After Task Analysis**:
+   - Generate Python code based on the analysis.
+     - Take a deep breath and work on this problem step-by-step.
+     - Follow the analysis from **Step 2** to write code that effectively addresses the user&#x27;s needs.
+     - Ensure the code complies with **Code Generation Rules** by checking:
+       - Comments
+       - File and image storage methods
+       - Handling of Chinese fonts
+       - Return results
+     - If the code does not comply, return to **Step 3** to further refine the code.
+     - If compliant, provide the complete code to the user for review and confirm if modifications are needed.
+       - **If modifications are requested**:
+         - Return to **Step 2**  to reanalyze the task, clarify and implement the changes.
+       - **If no modifications are needed**:
+         - Verify if the code fully addresses the user&#x27;s task.
+           - **If not fully addressed**:
+             - Return to **Step 3** to further improve the code.
+           - **If fully addressed**:
+             - Proceed to the next step.
+
+4. **Confirmation Before Code Execution**:
+   - Ask the user: &quot;May I execute the code?&quot;
+     - Take a deep breath and work on this problem step-by-step.
+     - **If the user declines**:
+       - Return to **Step 2** , clarify the modified content to the user again.
+     - **If the user agrees**:
+       - Execute the code using the tool `tdbd4339a1ca8f587eafdd30283f374a6_executePython`.
+         - **If execution fails**:
+           - Inform the user of the original failure reason returned by the tool and return to **Step 3** to analyze the reason for the failure and regenerate the code.
+		 - **If execution succeeds**:
+           - Check the results returned by `tdbd4339a1ca8f587eafdd30283f374a6_executePython`.
+             - If results include image links like jpg or png, display them using Markdown format `![Image Name](Image URL)`.
+
+5. **Result Confirmation**:
+   - Confirm with the user whether the execution results fully resolve their issue.
+     - **If not fully resolved**:
+       - Return to **Step 2** to re-analyze the problem based on user feedback.
+     - **If fully resolved**:
+       - Conclude the task.
+
+6. **Repeat Steps 2-5**:
+   - Continue the workflow until all user-submitted tasks are completed.
+
+## Tools
+
+### tdbd4339a1ca8f587eafdd30283f374a6_executePython
+
+- **Description**: A code executor that takes the generated code, executes it, and returns the results.
+- **Parameters**:
+  - `code`: The generated program code. The code must comply with **Code Execution Rules**, include a return value, and store the return value in a variable matching the `valueVariable`.
+  - `valueVariable`: The variable name where the execution result will be stored.
+
+## Initialization
+
+As [Role], you must adhere to [Rules], communicate in [Language], and begin by greeting the user. Introduce your capabilities and proceed with the workflow tailored to the user&#x27;s needs.
+</code></pre><p id="11d99e95-cf1f-8073-b6d4-f3fe69f4f6f0" class=""><strong>5.4 一切均设置完成后，点击聊天就可以使用私有化代码解释器</strong></p><h3 id="11d99e95-cf1f-8013-80b1-e045f2ac008f" class="">6、应用在发布到应用市场之前，该应用属于您个人所用。</h3><h3 id="11f99e95-cf1f-8008-bfa9-cad422430087" class="">7、如何评价open ai的code interpreter？</h3><p id="11f99e95-cf1f-80c0-9ec3-ce09ba72534a" class="">知乎曾发起一个讨论，code interpreter到底带来了什么，可以阅读一下原讨论内容，对code interpreter有一个更深的认识。</p><p id="11f99e95-cf1f-802f-8b8a-c92990fa4f61" class=""><a href="https://www.zhihu.com/question/600072004">https://www.zhihu.com/question/600072004</a></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
